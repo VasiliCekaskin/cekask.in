@@ -1,63 +1,36 @@
 import { getContent, profile } from "@/content";
 import type { Locale } from "@/i18n/config";
-import { ArrowUpRightIcon, GitHubIcon, LinkedInIcon, MailIcon } from "./icons";
+import { AvailabilityFlag } from "./AvailabilityFlag";
+import { mailHref } from "./mailto";
 import styles from "./Contact.module.css";
 
+/** The address itself is the call to action. */
 export function Contact({ locale }: { locale: Locale }) {
-  const { contact, ui } = getContent(locale);
-  const profiles = [
-    { ...profile.social.github, Icon: GitHubIcon },
-    { ...profile.social.linkedin, Icon: LinkedInIcon },
-  ].filter((profile) => profile.url);
+  const { contact, site, ui } = getContent(locale);
+  const mailto = mailHref(contact.mailSubject);
 
   return (
-    <section id="contact" aria-labelledby="contact-heading" className={styles.section}>
-      {/* The hero's grid floor again, closing the page. */}
-      <div className={styles.floor} aria-hidden="true">
-        <div className={styles.grid} />
-      </div>
-      <div className={`container ${styles.inner}`}>
-        <p className="label">
-          <span className={styles.index}>05</span> {ui.contact.label}
-        </p>
+    <section id="contact" className={`container rail ${styles.contact}`} aria-labelledby="contact-title">
+      <p className="rail-label" aria-hidden="true">
+        {ui.sections.contact}
+      </p>
 
-        <h2 id="contact-heading" className={styles.title}>
+      <div className={styles.body}>
+        <AvailabilityFlag show={profile.openToWork} text={site.availability} />
+        <h2 id="contact-title" className={styles.title}>
           {contact.title}
         </h2>
-        <p className={styles.intro}>{contact.intro}</p>
-
-        <div className={styles.channels}>
-          {profile.email && (
-            <a href={`mailto:${profile.email}`} className={styles.email}>
-              <MailIcon size={22} />
-              {profile.email}
-            </a>
-          )}
-
-          {profiles.length > 0 && (
-            <ul role="list" className={styles.profiles}>
-              {profiles.map(({ label, url, Icon }) => (
-                <li key={label}>
-                  <a href={url!} className="text-link" target="_blank" rel="noopener noreferrer">
-                    <Icon size={16} />
-                    {label}
-                    <ArrowUpRightIcon />
-                    <span className="visually-hidden">{ui.newTab}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className={styles.audiences}>
-          {contact.audiences.map((audience) => (
-            <div key={audience.title} className={styles.audience}>
-              <h3 className={styles.audienceTitle}>{audience.title}</h3>
-              <p>{audience.text}</p>
-            </div>
-          ))}
-        </div>
+        <p className={styles.text}>{contact.text}</p>
+        {mailto && (
+          <a href={mailto} className={styles.email}>
+            {profile.email}
+            <span className={styles.arrow} aria-hidden="true">
+              →
+            </span>
+            <span className="visually-hidden"> ({contact.button})</span>
+          </a>
+        )}
+        {contact.note && <p className={styles.note}>{contact.note}</p>}
       </div>
     </section>
   );

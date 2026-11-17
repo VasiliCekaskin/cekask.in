@@ -2,24 +2,19 @@ import type { SiteText } from "../types";
 
 export const site: SiteText = {
   role: "Software Engineer",
-  tagline: "Software engineer. Product builder. Curious by nature.",
-  intro:
-    "I build web applications, cloud infrastructure, and independent products — from the first rough idea to software that runs in production.",
-
   location: "Düsseldorf area, Germany",
-  experience: "7 years, including training",
-  focus: "Full-stack, AWS, product",
-  languages: ["German", "English", "Russian"],
+  headline: "Software engineer from finance and insurance. Ready for the *next challenge.*",
+  intro:
+    "I'm Vasili. In my full-time role I build web applications and AWS infrastructure that run in production every day. I'm now looking for a new position and would be glad to hear from you.",
 
   availability: {
-    headline: "Open to full-time software engineering roles",
-    detail: "Remote or hybrid — around Düsseldorf, Essen, and Cologne.",
-    secondary: "Also available for selected independent projects.",
+    headline: "Open to a new role",
+    detail: "Remote or hybrid, Düsseldorf area",
   },
 
   seo: {
     title: "Vasili Cekaskin — Software Engineer",
     description:
-      "Software engineer from the Düsseldorf area building full-stack web applications, AWS cloud infrastructure, and independent products. Open to full-time roles and selected projects.",
+      "Software engineer from finance and insurance, based near Düsseldorf: web applications and AWS infrastructure. Open to a new role, with consulting and fixed-price websites on the side.",
   },
 };

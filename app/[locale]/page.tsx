@@ -1,17 +1,15 @@
-import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
-import { Experience } from "@/components/Experience";
-import { Expertise } from "@/components/Expertise";
 import { Hero } from "@/components/Hero";
-import { Projects } from "@/components/Projects";
+import { Offers } from "@/components/Offers";
 import { getContent, profile } from "@/content";
 import { getLocale, type LocaleParams } from "@/i18n/params";
 
 export default async function HomePage({ params }: { params: LocaleParams }) {
   const locale = await getLocale(params);
-  const { site } = getContent(locale);
+  const { site, offers } = getContent(locale);
 
-  // Structured data so search engines understand who this page is about.
+  // Structured data so search engines understand who this page is about
+  // and what is offered.
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -30,6 +28,10 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
     sameAs: Object.values(profile.social)
       .map((link) => link.url)
       .filter(Boolean),
+    makesOffer: offers.items.map((offer) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: offer.title, description: offer.text },
+    })),
   };
 
   return (
@@ -41,10 +43,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         }}
       />
       <Hero locale={locale} />
-      <Projects locale={locale} />
-      <About locale={locale} />
-      <Experience locale={locale} />
-      <Expertise locale={locale} />
+      <Offers locale={locale} />
       <Contact locale={locale} />
     </>
   );

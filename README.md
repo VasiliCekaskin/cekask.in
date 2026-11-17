@@ -35,15 +35,12 @@ All personal facts live in `content/`. Components only render what's there.
 
 | File | What it holds |
 |---|---|
-| `content/profile.ts` | Facts that are the same in every language: name, domain, photos, email, social links, availability on/off |
+| `content/profile.ts` | Facts that are the same in every language: name, domain, photos, email, social links, the two green flags, and the intro video |
 | `content/legal.ts` | Address, hosting provider, and other details for the legal pages |
-| `content/<locale>/site.ts` | Role, intro, location, availability text, SEO title and description |
-| `content/<locale>/projects.ts` | Featured project (TrackDemos), smaller projects, anonymized professional case studies |
-| `content/<locale>/experience.ts` | Work history, newest first |
-| `content/<locale>/expertise.ts` | The four capability groups and their tools |
-| `content/<locale>/about.ts` | About paragraphs, portrait alt text, "How I work" principles |
-| `content/<locale>/contact.ts` | Contact heading and the two "Hiring / Independent projects" notes |
-| `content/<locale>/ui.ts` | Interface labels: navigation, section headings, buttons, screen reader text |
+| `content/<locale>/site.ts` | Role, headline, intro, job-search flag text, SEO title and description |
+| `content/<locale>/offers.ts` | The three facts under the intro, the video caption, and the side services (Einzelunternehmen) with prices |
+| `content/<locale>/contact.ts` | Contact block for job offers: heading, one sentence, button label, email subject, note |
+| `content/<locale>/ui.ts` | Interface labels and screen reader text |
 | `content/<locale>/legal.tsx` | Impressum and privacy policy text (German is binding, English is a translation) |
 
 Conventions:
@@ -51,28 +48,41 @@ Conventions:
 - **`null` hides things.** A link with `url: null` is never rendered, so a
   missing profile URL can't show up as a broken link.
 - **`TODO` comments** mark facts that still need confirming.
-- To hide the availability notice, set `profile.openToWork = false`.
+- The page leads with the job search. `profile.openToWork = false` hides the
+  "open to a new role" flag (also on the link preview card);
+  `profile.hasCapacity = false` hides the consulting flag on the services.
+- **Intro video:** put an MP4 (H.264/AAC, ideally under ~20 MB) and a poster
+  image in `public/`, then set `profile.introVideo`, e.g.
+  `{ src: "/intro.mp4", poster: "/intro-poster.jpg", width: 1920, height: 1080, captions: { de: "/intro.de.vtt" } }`.
+  While it's `null` the video block is hidden. It's self-hosted, so no third
+  party is contacted, and nothing downloads until the visitor presses play.
+- Keep every offer to one line per field. The page is meant to fit in about
+  two screens.
 - When you change text in one language, change the other one too.
 
 ## Design notes
 
-- Tokens (colors, type scale, spacing) are CSS custom properties at the top
-  of `app/globals.css`. The site uses one dark neon palette, matching the
-  hero: cyan (`--accent`), magenta (`--accent-2`), and violet in between.
-- The `.inverse` class turns an element into a raised neon panel and swaps in
-  its palette for everything inside (used by the featured TrackDemos panel).
+The page should read like something set by hand, not a template:
+
+- **Short on purpose:** intro (video on the right when set) with three facts,
+  the side services, one contact block. Nothing else.
+- **Palette:** warm paper with a faint static grain, soft ink, one muted sage
+  accent, and green only for the status lamps. A quiet dark variant follows
+  the system setting. Tokens live at the top of `app/globals.css`.
+- **Typography:** Newsreader for headings and small italic notes, Geist for
+  text. In the headline, `*words in asterisks*` are set in sage italics.
+- **Editorial details:** section labels sit in a margin column (`.rail`);
+  the services are a numbered price list rather than cards; the email
+  address itself is the contact button; the footer carries a colophon with
+  a "last updated" date. Update that date when you change content.
+- **Technical-drawing nod:** the intro video sits inside corner marks with a
+  numbered caption ("Abb. 1"), a quiet reference to the Industriemechaniker
+  background.
+- **No animations.** Hovers only fade color or nudge an arrow by 3px.
 - Link previews: `app/[locale]/opengraph-image.tsx` renders a 1200×630 card
   per language at build time, using static font copies in `assets/og-fonts`.
-- Typography: Newsreader (display serif), Geist (text), Geist Mono (labels).
-  The font files live in `app/fonts` (SIL Open Font License) and are loaded
-  with `next/font/local`, so no font provider is contacted at build or run time.
-- The waveform motif (`components/Waveform.tsx`) is deterministic SVG, so
-  it renders identically on the server and costs no client JavaScript.
-- The hero background (`components/CyberBackdrop.tsx`) is an animated neon
-  city drawn with CSS and SVG — no JavaScript. It holds a still frame when
-  the visitor's system asks for reduced motion.
-- The TrackDemos visual is a drawn illustration, captioned as such.
-  Replace it with a real screenshot via `next/image` when one is available.
+- Fonts live in `app/fonts` (SIL Open Font License) and load with
+  `next/font/local`, so no font provider is contacted.
 
 ## Legal pages
 

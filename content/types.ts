@@ -12,43 +12,16 @@ export type ExternalLink = {
   url: string | null;
 };
 
-export type Project = {
-  slug: string;
-  name: string;
-  /** Short line under the title. */
-  tagline: string;
-  /** What kind of project this is, e.g. "Independent product". */
-  kind: string;
-  /** One or more paragraphs describing what it does and why it exists. */
-  description: string[];
-  /** What Vasili personally did on it. */
-  role: string;
-  highlights?: string[];
-  stack: string[];
-  links: ExternalLink[];
-};
-
-export type CaseStudy = {
-  title: string;
-  summary: string;
-  stack: string[];
-};
-
-export type ExperienceEntry = {
-  organization: string;
-  role: string;
-  /** Free-form so it can say "2019 – 2022", "Since January 2024", etc. */
-  period: string;
-  summary: string;
-  responsibilities?: string[];
-  /** Rendered smaller — for earlier, less relevant positions. */
-  compact?: boolean;
-};
-
-export type Capability = {
-  title: string;
-  description: string;
-  tools: string[];
+export type IntroVideo = {
+  /** MP4 (H.264 + AAC) in /public, e.g. "/intro.mp4". */
+  src: string;
+  /** Still image shown before playback, e.g. "/intro-poster.jpg". */
+  poster: string;
+  /** Pixel size of the video, so the page reserves the right box. */
+  width: number;
+  height: number;
+  /** Optional WebVTT subtitles per language, e.g. { de: "/intro.de.vtt" }. */
+  captions: Partial<Record<"de" | "en", string>>;
 };
 
 /** Facts that are the same in every language. */
@@ -60,8 +33,15 @@ export type Profile = {
   avatar: string;
   /** Larger portrait in the About section, from /public. */
   portrait: { src: string; width: number; height: number };
-  /** Set to false to hide the availability notice entirely. */
+  /** Green "open to new roles" flag at the top. False hides it everywhere. */
   openToWork: boolean;
+  /** Green "capacity for consultation" flag on the services. False hides it. */
+  hasCapacity: boolean;
+  /**
+   * The intro video, self-hosted from /public so no third party is contacted.
+   * `null` hides the video block until the file exists.
+   */
+  introVideo: IntroVideo | null;
   email: string | null;
   social: {
     github: ExternalLink;
@@ -69,91 +49,89 @@ export type Profile = {
   };
 };
 
-/** Translatable text for the hero, availability notice, and SEO. */
+/** Translatable text for the intro, availability flag, and SEO. */
 export type SiteText = {
   role: string;
-  tagline: string;
-  intro: string;
   location: string;
-  experience: string;
-  focus: string;
-  languages: string[];
-  availability: {
-    headline: string;
-    detail: string;
-    secondary: string;
-  };
-  seo: {
-    title: string;
-    description: string;
-  };
+  /** The one big sentence at the top. Wrap words in *asterisks* to set them in italics. */
+  headline: string;
+  intro: string;
+  /** The job-search flag at the top. */
+  availability: { headline: string; detail: string };
+  seo: { title: string; description: string };
 };
 
-export type AboutText = {
-  portraitAlt: string;
-  paragraphs: string[];
-  principles: { title: string; text: string }[];
+/** One product offered by the Einzelunternehmen. Keep each field to one line. */
+export type Offer = {
+  title: string;
+  /** Fixed price, shown prominently. Omit when the price depends on scope. */
+  price?: string;
+  text: string;
+  /** What the client holds in their hands afterwards. */
+  outcome: string;
+  /** Duration or format, e.g. "ca. 1 Woche". */
+  format: string;
+};
+
+export type OffersText = {
+  title: string;
+  intro: string;
+  /** The consultation flag on the services section. */
+  availability: { headline: string; detail: string };
+  button: string;
+  mailSubject: string;
+  items: Offer[];
+};
+
+export type VideoText = {
+  /** Figure number in the caption, e.g. "Abb. 1". */
+  figure: string;
+  title: string;
+  /** One line under the video. */
+  caption: string;
+  /** Accessible name for the player. */
+  label: string;
+  fallback: string;
+  /** Alt text for the portrait shown until the video exists. */
+  photoAlt: string;
+};
+
+/** Short proof points under the intro. */
+export type Fact = {
+  value: string;
+  label: string;
+  link?: ExternalLink;
 };
 
 export type ContactText = {
   title: string;
-  intro: string;
-  audiences: { title: string; text: string }[];
+  text: string;
+  button: string;
+  /** Subject line prefilled in the email. */
+  mailSubject: string;
+  /** Quiet extra line under the button. `null` hides it. */
+  note: string | null;
 };
 
-/** Interface labels: navigation, headings, buttons, screen reader text. */
+/** Interface labels: navigation, buttons, screen reader text. */
 export type UiText = {
   skipLink: string;
-  nav: {
-    label: string;
-    projects: string;
-    about: string;
-    experience: string;
-    contact: string;
-  };
   languageSwitcher: string;
   /** Appended (visually hidden) to links that open in a new tab. */
   newTab: string;
-  hero: {
-    explore: string;
-    contact: string;
-    asideLabel: string;
-    basedIn: string;
-    experience: string;
-    focus: string;
-    languages: string;
-  };
-  projects: {
-    label: string;
-    title: string;
-    intro: string;
-    featured: string;
-    myRole: string;
-    highlights: string;
-    technology: string;
-    technologyOf: (name: string) => string;
-    casesTitle: string;
-    casesNote: string;
-  };
-  /** Made-up example content for the drawn TrackDemos illustration. */
-  trackDemosVisual: {
-    heading: string;
-    count: string;
-    demos: { title: string; meta: string; access: string }[];
-    playerMeta: string;
-    caption: string;
-  };
-  about: { label: string; title: string; howIWork: string };
-  experience: { label: string; title: string; intro: string; at: string };
-  expertise: {
-    label: string;
-    title: string;
-    intro: string;
-    toolsOf: (capability: string) => string;
-  };
-  contact: { label: string };
+  seeOffers: string;
+  factsLabel: string;
+  outcome: string;
+  /** Margin labels for the sections. */
+  sections: { offers: string; contact: string };
+  /** Accessible label for the list of services. */
+  offersList: string;
+  /** Shown in the services price column when there is no fixed price. */
+  onRequest: string;
   footer: {
     note: string;
+    /** Small print about how the page was made. */
+    colophon: string;
     legalLabel: string;
     impressum: string;
     datenschutz: string;
@@ -168,13 +146,9 @@ export type UiText = {
 /** Everything a page needs in one language. Both locales must match it. */
 export type Content = {
   site: SiteText;
-  featuredProject: Project;
-  projects: Project[];
-  caseStudies: CaseStudy[];
-  moreWork: ExternalLink;
-  experience: ExperienceEntry[];
-  capabilities: Capability[];
-  about: AboutText;
+  facts: Fact[];
+  video: VideoText;
+  offers: OffersText;
   contact: ContactText;
   ui: UiText;
 };

@@ -1,60 +1,73 @@
 /* ------------------------------------------------------------------
    Tokens
-   Neon night palette, matching the hero: cyan as the main accent, magenta
-   as the second, violet in between. The site is dark in every color
-   scheme. Every text/background pairing meets WCAG AA contrast.
+   A calm palette: warm paper, soft ink, one muted sage accent, and a
+   green reserved for the availability flag. Light by default, with a
+   quiet dark variant. Every text/background pairing meets WCAG AA.
    ------------------------------------------------------------------ */
 :root {
-  --bg: #07060f;
-  --surface: #100c22;
-  --surface-sunk: #0b0918;
-  --ink: #f4f1ff;
-  --ink-2: #c9c2e8;
-  --ink-3: #a59ec6;
-  --line: #2a2147;
-  --line-strong: #4a3d7a;
-  --accent: #2de2e6;
-  --accent-2: #ff3ea5;
-  --accent-ink: #07060f;
-  --violet: #9b5cff;
-  --positive: #39ff9c;
-  --neon-gradient: linear-gradient(90deg, #2de2e6, #9b5cff 55%, #ff3ea5);
-  --glow-cyan: 0 0 24px rgb(45 226 230 / 0.35);
-  --glow-magenta: 0 0 24px rgb(255 62 165 / 0.35);
+  --bg: #f6f4ef;
+  --surface: #fdfcf9;
+  --surface-sunk: #efece5;
+  --ink: #23271f;
+  --ink-2: #4a5047;
+  --ink-3: #646b60;
+  --line: #e2ded5;
+  --line-strong: #c9c4b8;
+  --accent: #4e6e58;
+  --accent-ink: #f6f4ef;
+  --button: #33473a;
+  --button-hover: #283a2e;
 
-  /* Raised panel (featured project): a notch lighter, with a neon edge. */
-  --inverse-bg: #0e0a20;
-  --inverse-surface: #171133;
-  --inverse-ink: #f4f1ff;
-  --inverse-ink-2: #cdc6ec;
-  --inverse-ink-3: #aaa3cb;
-  --inverse-line: #30265a;
-  --inverse-line-strong: #4f4283;
-  --inverse-accent: #2de2e6;
+  --green: #3d8b5a;
+  --green-ink: #24563a;
+  --green-soft: #e5efe6;
+  --green-line: #c4dbc8;
 
   --font-serif: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Fluid type scale */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-2xl: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
-  --text-3xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
-  --text-display: clamp(3rem, 1.6rem + 7vw, 7.5rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.45rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 1.2vw, 2.25rem);
+  --text-3xl: clamp(1.75rem, 1.4rem + 2.4vw, 3.25rem);
 
-  --space-section: clamp(5rem, 3.5rem + 6vw, 9rem);
+  --space-section: clamp(4rem, 3rem + 4vw, 6rem);
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
-  --max-width: 76rem;
-  --header-height: 3.75rem;
-  --radius: 14px;
+  --max-width: 64rem;
+  --header-height: 4rem;
+  --radius: 12px;
 
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171916;
+    --surface: #1e211d;
+    --surface-sunk: #131512;
+    --ink: #e8e6e0;
+    --ink-2: #bcc0b6;
+    --ink-3: #969b8f;
+    --line: #2d312b;
+    --line-strong: #454a42;
+    --accent: #9dbfa6;
+    --accent-ink: #171916;
+    --button: #c9dccd;
+    --button-hover: #dbe8de;
+
+    --green: #78c493;
+    --green-ink: #b5e0c2;
+    --green-soft: #1d2b21;
+    --green-line: #2f4a37;
+
+    color-scheme: dark;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -70,26 +83,13 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 1.5rem);
 }
 
 body {
   margin: 0;
-  /* Faint blueprint grid and two distant glows behind everything. */
+  /* Faint paper grain: one static SVG noise tile, about 3% visible. */
   background-color: var(--bg);
-  background-image:
-    radial-gradient(70rem 45rem at 100% 0%, rgb(155 92 255 / 0.1), transparent 60%),
-    radial-gradient(55rem 45rem at 0% 55%, rgb(45 226 230 / 0.06), transparent 60%),
-    radial-gradient(60rem 40rem at 90% 100%, rgb(255 62 165 / 0.07), transparent 60%),
-    linear-gradient(rgb(155 92 255 / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(155 92 255 / 0.045) 1px, transparent 1px);
-  background-size:
-    auto,
-    auto,
-    auto,
-    64px 64px,
-    64px 64px;
-  background-attachment: fixed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -123,9 +123,17 @@ h2,
 h3 {
   font-family: var(--font-serif);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   text-wrap: balance;
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* Emphasis in headings: the serif's italic, in the sage accent. */
+h1 em,
+h2 em {
+  font-style: italic;
+  color: var(--accent);
 }
 
 p {
@@ -143,8 +151,8 @@ svg {
 }
 
 ::selection {
-  background: var(--accent-2);
-  color: var(--accent-ink);
+  background: var(--green-soft);
+  color: var(--ink);
 }
 
 :focus-visible {
@@ -161,8 +169,6 @@ svg {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
@@ -189,42 +195,45 @@ svg {
   border: 0;
 }
 
-/* Raised neon panel: swaps in the panel palette for everything inside, so
-   components just keep using the normal tokens. */
-.inverse {
-  --bg: var(--inverse-bg);
-  --surface: var(--inverse-surface);
-  --ink: var(--inverse-ink);
-  --ink-2: var(--inverse-ink-2);
-  --ink-3: var(--inverse-ink-3);
-  --line: var(--inverse-line);
-  --line-strong: var(--inverse-line-strong);
-  --accent: var(--inverse-accent);
-  --accent-ink: var(--inverse-bg);
-
-  background:
-    radial-gradient(40rem 24rem at 100% 0%, rgb(155 92 255 / 0.16), transparent 70%),
-    radial-gradient(30rem 20rem at 0% 100%, rgb(45 226 230 / 0.08), transparent 70%),
-    var(--bg);
-  color: var(--ink);
-  border: 1px solid rgb(45 226 230 / 0.28);
-  box-shadow:
-    0 0 0 1px rgb(155 92 255 / 0.12),
-    0 30px 80px -40px rgb(155 92 255 / 0.45),
-    inset 0 1px 0 rgb(255 255 255 / 0.04);
+/* Section layout: a narrow margin column for the label, like the running
+   heads in a well-set book. On phones the label sits above the content. */
+.rail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 1.25rem;
 }
 
-/* Text filled with the cyan → violet → magenta neon gradient. */
-.neon-text {
-  background: var(--neon-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.rail-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-base);
+  color: var(--ink-3);
 }
 
-/* Small uppercase mono label used for eyebrows and metadata. */
+.rail-label::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+@media (min-width: 60rem) {
+  .rail {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    column-gap: 2rem;
+  }
+
+  .rail-label {
+    align-self: start;
+    padding-top: 0.55rem;
+  }
+}
+
+/* Small label used for eyebrows (404 page). */
 .label {
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -232,53 +241,63 @@ svg {
   color: var(--ink-3);
 }
 
-/* Inline list of tools, separated by thin dots — deliberately not badges.
-   Each item starts with its separator; the list is shifted left by one
-   separator width and clipped, so no line ever starts with a dot. */
-.tool-list {
-  --sep: 1.2em;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0;
-  margin-left: calc(-1 * var(--sep));
-  clip-path: inset(0 0 0 var(--sep));
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.tool-list li::before {
-  content: "·";
-  display: inline-block;
-  width: var(--sep);
-  text-align: center;
-  color: var(--accent-2);
-}
-
-/* Underlined text link with an arrow, used for outbound links. */
-.text-link {
+/* The one primary action. Solid, quiet, no shadow. */
+.button {
   display: inline-flex;
   align-items: center;
-  gap: 0.4em;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: var(--button);
+  color: var(--accent-ink);
+  font-size: var(--text-base);
   font-weight: 500;
+  text-decoration: none;
+  transition: background-color 200ms var(--ease);
+}
+
+.button:hover {
+  background: var(--button-hover);
+}
+
+/* Outlined variant for secondary actions, e.g. on the services. */
+.button-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+
+.button-secondary:hover {
+  background: var(--surface);
+  border-color: var(--ink-3);
+}
+
+/* Secondary text link: plain, underlined on hover. */
+.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--ink-2);
   text-decoration: underline;
   text-decoration-color: var(--line-strong);
-  transition: text-decoration-color 160ms var(--ease), color 160ms var(--ease);
+  transition: color 200ms var(--ease), text-decoration-color 200ms var(--ease);
+}
+
+.quiet-link:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+/* Underlined text link, used on the 404 page. */
+.text-link {
+  font-weight: 500;
+  text-decoration-color: var(--line-strong);
 }
 
 .text-link:hover {
   color: var(--accent);
   text-decoration-color: currentColor;
-  text-shadow: var(--glow-cyan);
-}
-
-.text-link svg {
-  transition: transform 200ms var(--ease);
-}
-
-.text-link:hover svg {
-  transform: translate(2px, -2px);
 }
 
 /* Skip link — only visible when focused. */
@@ -288,7 +307,7 @@ svg {
   top: 0.75rem;
   z-index: 100;
   padding: 0.6rem 1rem;
-  background: var(--accent);
+  background: var(--button);
   color: var(--accent-ink);
   border-radius: 999px;
   font-size: var(--text-sm);
@@ -299,11 +318,4 @@ svg {
 
 .skip-link:focus-visible {
   transform: none;
-}
-
-/* The header wraps to two rows on small screens. */
-@media (max-width: 39.99rem) {
-  :root {
-    --header-height: 5.75rem;
-  }
 }

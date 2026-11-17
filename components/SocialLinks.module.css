@@ -10,12 +10,11 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  color: var(--ink-2);
-  transition: color 160ms var(--ease), background-color 160ms var(--ease);
+  color: var(--ink-3);
+  transition: color 200ms var(--ease), background-color 200ms var(--ease);
 }
 
 .link:hover {
-  color: var(--accent);
-  background: var(--surface);
-  box-shadow: 0 0 0 1px rgb(45 226 230 / 0.4), var(--glow-cyan);
+  color: var(--ink);
+  background: var(--surface-sunk);
 }

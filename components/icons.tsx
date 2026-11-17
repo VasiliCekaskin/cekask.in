@@ -28,23 +28,6 @@ export function LinkedInIcon(props: IconProps) {
   );
 }
 
-export function MailIcon(props: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...base(props)}
-    >
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
-    </svg>
-  );
-}
-
 /** Diagonal arrow for links that leave the site. */
 export function ArrowUpRightIcon(props: IconProps) {
   return (
@@ -58,22 +41,6 @@ export function ArrowUpRightIcon(props: IconProps) {
       {...base({ size: 14, ...props })}
     >
       <path d="M7 17 17 7M8 7h9v9" />
-    </svg>
-  );
-}
-
-export function ArrowDownIcon(props: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...base({ size: 16, ...props })}
-    >
-      <path d="M12 5v14M6 13l6 6 6-6" />
     </svg>
   );
 }

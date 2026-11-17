@@ -1,0 +1,63 @@
+.figure {
+  display: grid;
+  gap: 0.9rem;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Corner marks, as on a technical drawing: eight hairlines, no box. */
+.frame {
+  --mark: var(--ink-3);
+  --len: 14px;
+  padding: 10px;
+  background:
+    linear-gradient(var(--mark), var(--mark)) top left / var(--len) 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) top left / 1px var(--len) no-repeat,
+    linear-gradient(var(--mark), var(--mark)) top right / var(--len) 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) top right / 1px var(--len) no-repeat,
+    linear-gradient(var(--mark), var(--mark)) bottom left / var(--len) 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) bottom left / 1px var(--len) no-repeat,
+    linear-gradient(var(--mark), var(--mark)) bottom right / var(--len) 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) bottom right / 1px var(--len) no-repeat;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 3px;
+  background: var(--surface-sunk);
+  object-fit: cover;
+}
+
+.caption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  padding-inline: 10px;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.figNo {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05em;
+  color: var(--ink-2);
+}
+
+.caption strong {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+/* Portrait shown until the intro video exists. */
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  background: var(--surface-sunk);
+}

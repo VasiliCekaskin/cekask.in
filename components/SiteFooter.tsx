@@ -10,15 +10,17 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
-        <p className={styles.copy}>
-          © {new Date().getFullYear()} {profile.name}
-          <span className={styles.note}>{ui.footer.note}</span>
-        </p>
+        <div className={styles.copy}>
+          <p>
+            © {new Date().getFullYear()} {profile.name}. {ui.footer.note}
+          </p>
+          <p className={styles.colophon}>{ui.footer.colophon}</p>
+        </div>
         <nav aria-label={ui.footer.legalLabel} className={styles.legal}>
           <Link href={`/${locale}/impressum`}>{ui.footer.impressum}</Link>
           <Link href={`/${locale}/datenschutz`}>{ui.footer.datenschutz}</Link>
+          <SocialLinks locale={locale} />
         </nav>
-        <SocialLinks locale={locale} />
       </div>
     </footer>
   );
