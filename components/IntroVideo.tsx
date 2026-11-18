@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getContent, profile } from "@/content";
 import type { Locale } from "@/i18n/config";
@@ -18,18 +19,26 @@ export const showVideoSlot = true;
 export function IntroVideo({ locale }: { locale: Locale }) {
   const config = profile.introVideo;
   const { video } = getContent(locale);
+  // Visible height after trimming `cropTop` source pixels off the top.
+  const shownHeight = config ? config.height - (config.cropTop ?? 0) : 0;
 
   return (
-    <figure className={styles.figure}>
+    <figure
+      className={styles.figure}
+      style={config ? ({ "--ar": config.width / shownHeight } as CSSProperties) : undefined}
+    >
       <div className={styles.frame}>
         {config ? (
           <video
             className={styles.video}
             width={config.width}
-            height={config.height}
-            style={{ aspectRatio: `${config.width} / ${config.height}` }}
+            height={shownHeight}
+            style={{ aspectRatio: `${config.width} / ${shownHeight}` }}
             poster={config.poster}
             controls
+            // No fullscreen or picture-in-picture: the inline crop is the intended view.
+            controlsList="nofullscreen noremoteplayback"
+            disablePictureInPicture
             playsInline
             preload="none"
             aria-label={video.label}

@@ -7,11 +7,29 @@ import { isLocale, locales, type Locale } from "@/i18n/config";
 import { getLocale, type LocaleParams } from "@/i18n/params";
 
 /*
- * The link preview card for social networks and messengers, in the same
- * calm paper palette as the site. Rendered once per locale at build time.
+ * The link preview card for social networks and messengers: a miniature of
+ * the home page's first screen (header, availability flag, headline, button,
+ * portrait in its corner-mark frame, facts). Rendered once per locale at
+ * build time.
  */
 
 const size = { width: 1200, height: 630 };
+
+/* The site's dark tokens from app/globals.css. Swap for the light set
+ * (bg #f6f4ef, ink #23271f, …) to render a light card instead. */
+const c = {
+  bg: "#171916",
+  surfaceSunk: "#131512",
+  ink: "#e8e6e0",
+  ink2: "#bcc0b6",
+  ink3: "#969b8f",
+  line: "#2d312b",
+  lineStrong: "#454a42",
+  accent: "#9dbfa6",
+  accentInk: "#171916",
+  green: "#78c493",
+  greenInk: "#b5e0c2",
+};
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -30,19 +48,55 @@ export function generateImageMetadata({ params }: { params: { locale: string } }
   ];
 }
 
+/** Corner marks around the photo, as on the site. */
+function Corner({ top, left }: { top: boolean; left: boolean }) {
+  const len = 16;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: len,
+        height: len,
+        [top ? "top" : "bottom"]: 0,
+        [left ? "left" : "right"]: 0,
+        [top ? "borderTop" : "borderBottom"]: `1.5px solid ${c.ink3}`,
+        [left ? "borderLeft" : "borderRight"]: `1.5px solid ${c.ink3}`,
+      }}
+    />
+  );
+}
+
 export default async function OpenGraphImage({ params }: { params: LocaleParams }) {
   const locale = await getLocale(params);
-  const { site } = getContent(locale);
+  const { site, facts, contact } = getContent(locale);
 
-  const [geist, geistSemiBold, serif, avatar] = await Promise.all([
+  const [geist, geistSemiBold, serif, serifItalic, portrait] = await Promise.all([
     // ImageResponse can't read woff2, so these are static TTF/WOFF copies of
-    // the site's fonts. The avatar is profile.avatar.
+    // the site's fonts. The photo is profile.portrait.
     readFile(join(process.cwd(), "assets/og-fonts/Geist-Regular.ttf")),
     readFile(join(process.cwd(), "assets/og-fonts/Geist-SemiBold.ttf")),
     readFile(join(process.cwd(), "assets/og-fonts/Newsreader-Medium.woff")),
-    readFile(join(process.cwd(), "public/vasili-2.png")),
+    readFile(join(process.cwd(), "assets/og-fonts/Newsreader-Italic.woff")),
+    readFile(join(process.cwd(), "public", profile.portrait.src)),
   ]);
-  const avatarSrc = `data:image/png;base64,${avatar.toString("base64")}`;
+  const portraitSrc = `data:image/jpeg;base64,${portrait.toString("base64")}`;
+
+  // The headline with its *emphasis* in italic sage, split into words so
+  // satori can wrap it like running text.
+  const words = site.headline
+    .split(/\*(.+?)\*/g)
+    .flatMap((part, i) =>
+      part
+        .split(" ")
+        .filter(Boolean)
+        .map((word) => ({ word, em: i % 2 === 1 })),
+    );
+
+  // Long headlines (German) get a smaller size so the button stays clear of the facts.
+  const headlineSize = plain(site.headline).length > 85 ? 44 : 54;
+
+  const photoH = 384;
+  const photoW = Math.round((photoH * profile.portrait.width) / profile.portrait.height);
 
   return new ImageResponse(
     (
@@ -52,76 +106,119 @@ export default async function OpenGraphImage({ params }: { params: LocaleParams 
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "72px 80px 64px",
-          background: "#f6f4ef",
-          color: "#23271f",
+          background: c.bg,
+          color: c.ink,
           fontFamily: "Geist",
         }}
       >
-        {/* Avatar, name, role */}
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+        {/* Site header */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 76,
+            padding: "0 64px",
+            borderBottom: `1px solid ${c.line}`,
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ fontFamily: "Geist SemiBold", fontSize: 19 }}>{profile.name}</div>
+            <div style={{ fontSize: 17, color: c.ink3 }}>{site.role}</div>
+          </div>
+          <div style={{ fontSize: 18, color: c.ink3 }}>{new URL(profile.url).host}</div>
+        </div>
+
+        {/* Hero */}
+        <div style={{ display: "flex", flex: 1, padding: "34px 64px 0", gap: 56 }}>
+          <div style={{ display: "flex", flexDirection: "column", flex: 1, paddingTop: 18 }}>
+            {profile.openToWork && (
+              <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 19 }}>
+                <div style={{ width: 11, height: 11, borderRadius: 6, background: c.green }} />
+                <div style={{ fontFamily: "Geist SemiBold", color: c.greenInk }}>
+                  {site.availability.headline}
+                </div>
+                <div style={{ width: 22, height: 1, background: c.lineStrong }} />
+                <div style={{ color: c.ink3 }}>{site.availability.detail}</div>
+              </div>
+            )}
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                marginTop: 26,
+                fontFamily: "Newsreader",
+                fontSize: headlineSize,
+                lineHeight: 1.12,
+                letterSpacing: -0.8,
+              }}
+            >
+              {words.map(({ word, em }, i) => (
+                <span
+                  key={i}
+                  style={{
+                    marginRight: Math.round(headlineSize * 0.24),
+                    ...(em ? { fontFamily: "Newsreader Italic", color: c.accent } : {}),
+                  }}
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", marginTop: 34 }}>
+              <div
+                style={{
+                  display: "flex",
+                  padding: "14px 30px",
+                  borderRadius: 999,
+                  background: c.accent,
+                  color: c.accentInk,
+                  fontFamily: "Geist SemiBold",
+                  fontSize: 20,
+                }}
+              >
+                {contact.button}
+              </div>
+            </div>
+          </div>
+
+          {/* Portrait in its corner-mark frame */}
           <div
             style={{
               display: "flex",
               position: "relative",
-              width: 84,
-              height: 84,
-              borderRadius: 42,
-              overflow: "hidden",
-              background: "#ffffff",
-              border: "1px solid #e2ded5",
+              padding: 10,
+              width: photoW + 20,
+              height: photoH + 20,
             }}
           >
-            {/* Face crop: 300×300 of the 800×800 avatar. */}
-            <img src={avatarSrc} alt="" width={224} height={224} style={{ position: "absolute", left: -82, top: -3 }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <div style={{ fontFamily: "Geist SemiBold", fontSize: 30 }}>{profile.name}</div>
-            <div style={{ fontSize: 24, color: "#646b60" }}>
-              {`${site.role} · ${site.location}`}
-            </div>
+            <Corner top left />
+            <Corner top left={false} />
+            <Corner top={false} left />
+            <Corner top={false} left={false} />
+            <img
+              src={portraitSrc}
+              alt=""
+              width={photoW}
+              height={photoH}
+              style={{ borderRadius: 4, background: c.surfaceSunk }}
+            />
           </div>
         </div>
 
-        {/* Headline */}
-        <div
-          style={{
-            display: "flex",
-            maxWidth: 980,
-            fontFamily: "Newsreader",
-            fontSize: 58,
-            lineHeight: 1.12,
-            letterSpacing: -1,
-          }}
-        >
-          {plain(site.headline)}
-        </div>
-
-        {/* Availability + domain */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {profile.openToWork ? (
+        {/* Facts */}
+        <div style={{ display: "flex", margin: "0 64px", borderTop: `1px solid ${c.line}` }}>
+          {facts.map((fact) => (
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "12px 24px 12px 20px",
-                borderRadius: 999,
-                border: "1.5px solid #c4dbc8",
-                background: "#e5efe6",
-                color: "#24563a",
-                fontFamily: "Geist SemiBold",
-                fontSize: 24,
-              }}
+              key={fact.value}
+              style={{ display: "flex", flexDirection: "column", flex: 1, padding: "16px 0 28px", gap: 2 }}
             >
-              <div style={{ width: 14, height: 14, borderRadius: 7, background: "#3d8b5a" }} />
-              {site.availability.headline}
+              <div style={{ fontFamily: "Newsreader", fontSize: 23 }}>{fact.value}</div>
+              <div style={{ fontSize: 16, color: c.ink3 }}>{fact.label}</div>
             </div>
-          ) : (
-            <div style={{ display: "flex" }} />
-          )}
-          <div style={{ fontSize: 24, color: "#646b60" }}>{new URL(profile.url).host}</div>
+          ))}
         </div>
       </div>
     ),
@@ -131,6 +228,7 @@ export default async function OpenGraphImage({ params }: { params: LocaleParams 
         { name: "Geist", data: geist, weight: 400, style: "normal" },
         { name: "Geist SemiBold", data: geistSemiBold, weight: 600, style: "normal" },
         { name: "Newsreader", data: serif, weight: 500, style: "normal" },
+        { name: "Newsreader Italic", data: serifItalic, weight: 400, style: "italic" },
       ],
     },
   );

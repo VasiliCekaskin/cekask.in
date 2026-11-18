@@ -11,15 +11,21 @@ export const profile: Profile = {
   name: "Vasili Cekaskin",
   url: "https://cekask.in",
 
-  avatar: "/vasili-2.png",
   portrait: { src: "/vasili-portrait.jpg", width: 1200, height: 1500 },
 
   openToWork: true,
   hasCapacity: true,
 
-  // TODO: drop the recorded video into /public and fill this in, e.g.
-  // { src: "/intro.mp4", poster: "/intro-poster.jpg", width: 1920, height: 1080, captions: { de: "/intro.de.vtt" } }
-  introVideo: null,
+  // Portrait phone video. Optional WebVTT subtitles go in `captions`,
+  // e.g. { de: "/intro.de.vtt" }.
+  introVideo: {
+    src: "/intro.mp4",
+    poster: "/intro-poster.jpg",
+    width: 464,
+    height: 832,
+    cropTop: 290,
+    captions: {},
+  },
 
   // TODO: confirm this mailbox exists — taken from the commit email used in
   // the TrackDemos repositories.
@@ -33,7 +39,7 @@ export const profile: Profile = {
     // TODO: add your LinkedIn profile URL.
     linkedin: {
       label: "LinkedIn",
-      url: null,
+      url: "https://www.linkedin.com/in/vasili-cekaskin-58350a221/",
     },
   },
 };

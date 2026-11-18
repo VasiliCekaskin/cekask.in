@@ -29,6 +29,20 @@
   border-radius: 3px;
   background: var(--surface-sunk);
   object-fit: cover;
+  /* With cropTop set, the box is shorter than the video: keep the bottom. */
+  object-position: 50% 100%;
+}
+
+/* Hide the fullscreen button where controlsList isn't honoured (Safari). */
+.video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+
+/* Firefox still allows fullscreen: show the whole video there, not the
+ * bottom-anchored crop (which would zoom in on the hands). */
+.video:fullscreen {
+  object-fit: contain;
+  object-position: 50% 50%;
 }
 
 .caption {
@@ -60,4 +74,15 @@
   height: auto;
   border-radius: 3px;
   background: var(--surface-sunk);
+}
+
+/* Wide screens: cap the portrait video's height so it sits beside the text
+ * instead of towering over it. The figure is sized from that height and the
+ * video's aspect ratio (--ar, set inline) so frame and caption hug the video. */
+@media (min-width: 60rem) {
+  .figure {
+    --video-h: min(72vh, 600px);
+    width: min(100%, calc(var(--video-h) * var(--ar, 1) + 20px));
+    justify-self: center;
+  }
 }

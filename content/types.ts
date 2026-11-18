@@ -20,6 +20,8 @@ export type IntroVideo = {
   /** Pixel size of the video, so the page reserves the right box. */
   width: number;
   height: number;
+  /** Source pixels hidden at the top (e.g. empty wall above the head). Fullscreen still shows everything. */
+  cropTop?: number;
   /** Optional WebVTT subtitles per language, e.g. { de: "/intro.de.vtt" }. */
   captions: Partial<Record<"de" | "en", string>>;
 };
@@ -29,8 +31,6 @@ export type Profile = {
   name: string;
   /** Production origin, used for canonical URLs, sitemap, and Open Graph. */
   url: string;
-  /** Small round portrait in the header, from /public. */
-  avatar: string;
   /** Larger portrait in the About section, from /public. */
   portrait: { src: string; width: number; height: number };
   /** Green "open to new roles" flag at the top. False hides it everywhere. */

@@ -13,7 +13,7 @@ export const facts: Fact[] = [
 export const video: VideoText = {
   figure: "Fig. 1",
   title: "A quick introduction",
-  caption: "Two minutes about me, my work, and what I bring to a team.",
+  caption: "One minute about me, my work, and what I bring to a team.",
   label: "Introduction video by Vasili Cekaskin",
   fallback: "Your browser can't play this video.",
   photoAlt: "Vasili Cekaskin smiling on a terrace by the sea at sunset",
