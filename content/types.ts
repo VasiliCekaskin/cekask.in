@@ -280,6 +280,30 @@ export type AiText = {
   fallback: string[];
 };
 
+/** Everything in the office game the player can use. */
+export type OfficeThing =
+  | "computer"
+  | "door"
+  | "coffee"
+  | "whiteboard"
+  | "portrait"
+  | "plant"
+  | "duck"
+  | "rack"
+  | "wrench"
+  | "guitar"
+  | "light"
+  | "cat"
+  | "calendar"
+  | "trash"
+  | "note"
+  | "trophy"
+  | "bathroom"
+  | "shower";
+
+/** The ones that count as easter eggs (everything but the computer and the door). */
+export type OfficeEgg = Exclude<OfficeThing, "computer" | "door" | "bathroom">;
+
 export type GameText = {
   /** Start screen */
   place: string;
@@ -293,12 +317,38 @@ export type GameText = {
   resume: string;
   /** "Press E" / "Tap" prompts per object, e.g. "Computer benutzen". */
   use: string;
-  prompts: { computer: string; coffee: string; door: string; whiteboard: string; portrait: string; plant: string };
-  /** Short messages shown when using the small objects; one is picked at random. */
-  coffee: string[];
-  whiteboard: string[];
-  portrait: string[];
-  plant: string[];
+  prompts: Record<OfficeThing, string>;
+  /**
+   * What each easter egg says when used; one line is picked at random.
+   * `light` is special: [lights off, lights on].
+   */
+  eggs: Record<OfficeEgg, string[]>;
+  /** "Easter egg {n}/{total}" toast; and the line when all are found. */
+  eggFound: string;
+  eggsLabel: string;
+  allFound: string;
+  /** After the 5th coffee: the player walks faster. */
+  coffeeRush: string;
+  /** Toast after a motto restyled the office, e.g. "The office now wears: {name}". */
+  themed: string;
+  /** Glows on the back wall when the lights are off. */
+  glow: string;
+  /** Circled on the wall calendar, under today's date. */
+  calendarNote: string;
+  /** The sticky note hidden under the desk. */
+  note: string;
+  /** The bathroom: Vasili in the shower, only his head showing, talks to you. */
+  shower: {
+    /** Toast when the bathroom door opens for the first time. */
+    heard: string;
+    name: string;
+    lines: string[];
+    /** Second visit onwards. */
+    again: string[];
+    next: string;
+    invite: string;
+    leave: string;
+  };
   door: string;
   /** Lines drawn on the in-game whiteboard and name plate. */
   board: string[];

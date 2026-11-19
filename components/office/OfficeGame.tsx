@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import type { GameText, MottoId } from "@/content/types";
+import type { GameText, MottoId, OfficeEgg } from "@/content/types";
+import { confetti } from "@/lib/confetti";
+import { sounds } from "./sounds";
 import { StagesContext } from "@/components/MottoStage";
 import { setMotto } from "@/lib/motto";
 import { ComputerContext, type AppId } from "./ComputerContext";
@@ -32,10 +34,22 @@ function leaveFullscreen() {
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
 }
 
-type Phase = "loading" | "intro" | "play" | "paused" | "computer" | "door";
+type Phase = "loading" | "intro" | "play" | "paused" | "computer" | "door" | "talk";
+
+const EGGS_KEY = "office-eggs";
+
+function readEggs(): OfficeEgg[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(localStorage.getItem(EGGS_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
 
 type Props = {
   text: GameText;
+  locale: string;
   /** What the in-game monitor shows. */
   screen: { lines: string[]; stats: { label: string; value: number }[]; footer: string };
   portraitSrc: string;
@@ -57,7 +71,7 @@ type Props = {
  * the page; "skip" opens the computer straight away (keyboard, screen
  * readers, no WebGL).
  */
-export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, intro, computer, whack, appNames }: Props) {
+export function OfficeGame({ text, locale, screen, portraitSrc, mailto, contactLabel, intro, computer, whack, appNames }: Props) {
   const stages = useContext(StagesContext);
   const [app, setApp] = useState<AppId | null>(null);
   const appBody = useRef<HTMLDivElement>(null);
@@ -66,7 +80,20 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
   const [phase, setPhaseState] = useState<Phase>("loading");
   const phaseRef = useRef<Phase>("loading");
   const [prompt, setPrompt] = useState<Interactable | null>(null);
-  const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
+  const [toast, setToast] = useState<{ id: number; text: string; sub?: string } | null>(null);
+  // Easter eggs found so far (remembered in this browser) and coffees had.
+  const [eggs, setEggs] = useState<OfficeEgg[]>(readEggs);
+  const eggsRef = useRef(eggs);
+  const coffees = useRef(0);
+  // The shower conversation: which lines, how far along, how many visits.
+  const [talk, setTalk] = useState<{ lines: string[]; at: number } | null>(null);
+  const visits = useRef(0);
+  const heardShower = useRef(false);
+  const inBath = useRef(false);
+  // The motto the office currently wears, and one to announce when back in the office.
+  const lookRef = useRef<AppId | null>(null);
+  const pendingLook = useRef<AppId | null>(null);
+  const totalEggs = Object.keys(text.eggs).length;
   const touch = useSyncExternalStore(subscribeCoarse, () => window.matchMedia(COARSE).matches, () => false);
   const portrait = useSyncExternalStore(subscribePortrait, () => window.matchMedia(PORTRAIT).matches, () => false);
   const section = useRef<HTMLElement>(null);
@@ -79,17 +106,64 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
     if (p === "intro") leaveFullscreen();
   }, []);
 
-  const say = useCallback((lines: string[]) => {
-    const line = lines[Math.floor(Math.random() * lines.length)];
+  const show = useCallback((line: string, sub?: string, ms = 3800) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({ id: Date.now(), text: line });
-    toastTimer.current = setTimeout(() => setToast(null), 3200);
+    setToast({ id: Date.now(), text: line, sub });
+    toastTimer.current = setTimeout(() => setToast(null), ms);
   }, []);
 
+  /** Using an easter egg: its line, a sound, and the tally when it's a new find. */
+  const triggerEgg = useCallback(
+    (egg: OfficeEgg, state?: { lightsOn?: boolean }) => {
+      const lines = text.eggs[egg];
+      let line = egg === "light" ? lines[state?.lightsOn ? 1 : 0] : lines[Math.floor(Math.random() * lines.length)];
+
+      if (egg === "coffee") {
+        coffees.current += 1;
+        if (coffees.current === 5) {
+          api.current?.setBoost(1.6);
+          line = text.coffeeRush;
+        }
+      }
+      ({ duck: sounds.quack, guitar: sounds.guitar, cat: sounds.purr, rack: sounds.alarm, light: sounds.click } as Partial<
+        Record<OfficeEgg, () => void>
+      >)[egg]?.();
+
+      if (eggsRef.current.includes(egg)) {
+        show(line);
+        return;
+      }
+      // Merge with what's stored, so finds in another tab aren't lost.
+      const next = [...new Set([...readEggs(), ...eggsRef.current, egg])];
+      eggsRef.current = next;
+      setEggs(next);
+      try {
+        localStorage.setItem(EGGS_KEY, JSON.stringify(next));
+      } catch {}
+      sounds.found();
+      show(line, text.eggFound.replace("{n}", String(next.length)).replace("{total}", String(totalEggs)));
+      if (next.length === totalEggs) {
+        setTimeout(() => {
+          confetti(undefined, 320);
+          show(text.allFound, undefined, 6000);
+        }, 2600);
+      }
+    },
+    [show, text, totalEggs],
+  );
+
   // Keep the latest handlers for the scene callbacks without re-creating it.
-  const handlers = useRef({ say, setPhase, text });
+  const startTalk = useCallback(() => {
+    visits.current += 1;
+    const lines = visits.current === 1 ? text.shower.lines : [text.shower.again[(visits.current - 2) % text.shower.again.length]];
+    setTalk({ lines, at: 0 });
+    setPhase("talk");
+    api.current?.setTalking(true);
+  }, [setPhase, text]);
+
+  const handlers = useRef({ triggerEgg, setPhase, startTalk, show });
   useEffect(() => {
-    handlers.current = { say, setPhase, text };
+    handlers.current = { triggerEgg, setPhase, startTalk, show };
   });
 
   useEffect(() => {
@@ -102,6 +176,10 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
       statsLines: screen.lines,
       stats: screen.stats,
       footer: screen.footer,
+      glow: text.glow,
+      calendarNote: text.calendarNote,
+      note: text.note,
+      locale,
     };
 
     Promise.all([import("three"), import("./office")])
@@ -112,12 +190,21 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
           onLockLost: () => {
             if (phaseRef.current === "play") handlers.current.setPhase("paused");
           },
-          onInteract: (target) => {
-            const { say, setPhase, text } = handlers.current;
+          onInteract: (target, state) => {
+            const { triggerEgg, setPhase, startTalk, show } = handlers.current;
             if (target === "computer") setPhase("computer");
             else if (target === "door") setPhase("door");
-            else if (target === "whiteboard") say(text.whiteboard);
-            else say(text[target]);
+            else if (target === "bathroom") {
+              if (state?.open && !heardShower.current) {
+                heardShower.current = true;
+                show(text.shower.heard);
+              }
+            } else if (target === "shower") startTalk();
+            else triggerEgg(target, state);
+          },
+          onRoom: (room) => {
+            inBath.current = room === "bathroom";
+            sounds.shower(inBath.current && phaseRef.current === "play");
           },
         });
         if (phaseRef.current === "loading") handlers.current.setPhase("intro");
@@ -137,6 +224,7 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
       cancelled = true;
       document.removeEventListener("fullscreenchange", onFullscreen);
       if (toastTimer.current) clearTimeout(toastTimer.current);
+      sounds.shower(false);
       api.current?.dispose();
       api.current = null;
       leaveFullscreen();
@@ -151,6 +239,8 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
       return;
     }
     setPhase("play");
+    // The game fills the screen under the header; make sure all of it is in view.
+    window.scrollTo({ top: 0 });
     api.current?.lock();
     if (touch) goLandscape(section.current);
   };
@@ -158,14 +248,28 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
   const back = () => {
     setApp(null);
     if (failed) setPhase("intro");
-    else play();
+    else {
+      play();
+      if (pendingLook.current) {
+        show(text.themed.replace("{name}", appNames[pendingLook.current].replace(/^✨\s*/, "")));
+        pendingLook.current = null;
+      }
+    }
+  };
+
+  const endTalk = () => {
+    setTalk(null);
+    api.current?.setTalking(false);
+    play();
+    triggerEgg("shower");
   };
 
   // Esc closes the computer or the door dialog.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      if (phaseRef.current === "computer" && app) setApp(null);
+      if (phaseRef.current === "talk") endTalk();
+      else if (phaseRef.current === "computer" && app) setApp(null);
       else if (phaseRef.current === "computer" || phaseRef.current === "door") back();
     };
     window.addEventListener("keydown", onKey);
@@ -185,13 +289,25 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
 
   // Inside the game, apps open in the computer. Without the game (no WebGL)
   // the context is left out, so the buttons switch the whole page as before.
-  const computerApi = useMemo(() => ({ open: (id: AppId) => setApp(id) }), []);
+  // Opening a motto also restyles the office (see lookRef); the toast says so on return.
+  const openApp = useCallback((id: AppId) => {
+    setApp(id);
+    api.current?.setTheme(id === "whack" ? "vibe" : id);
+    if (id !== lookRef.current) pendingLook.current = id;
+    lookRef.current = id;
+  }, []);
+  const computerApi = useMemo(() => ({ open: openApp }), [openApp]);
 
   const openAsPage = (id: MottoId) => {
     setApp(null);
     setMotto(id);
     window.scrollTo({ top: 0 });
   };
+
+  // The shower only runs (audibly) while playing in the bathroom.
+  useEffect(() => {
+    sounds.shower(inBath.current && (phase === "play" || phase === "talk"));
+  }, [phase]);
 
   // On phones the game takes the whole screen once you step in, and only
   // runs in landscape; upright, it waits behind a "please rotate" card.
@@ -258,6 +374,13 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
       {toast && phase === "play" && (
         <p key={toast.id} className={styles.toast} role="status">
           {toast.text}
+          {toast.sub && <span className={styles.toastSub}>{toast.sub}</span>}
+        </p>
+      )}
+
+      {showHud && (
+        <p className={styles.eggs} aria-label={`${text.eggsLabel}: ${eggs.length}/${totalEggs}`}>
+          🥚 {eggs.length}/{totalEggs}
         </p>
       )}
 
@@ -290,6 +413,41 @@ export function OfficeGame({ text, screen, portraitSrc, mailto, contactLabel, in
               <button type="button" className={styles.skip} onClick={() => setPhase("computer")}>
                 {text.skip}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {phase === "talk" && talk && (
+        <div className={styles.talkWrap}>
+          <div className={styles.talk} role="dialog" aria-modal="true" aria-label={text.shower.name}>
+            <span className={styles.talkFace} aria-hidden="true">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={portraitSrc} alt="" />
+            </span>
+            <div className={styles.talkBody}>
+              <p className={styles.talkName}>🚿 {text.shower.name}</p>
+              <p key={talk.at} className={styles.talkLine}>
+                {talk.lines[talk.at]}
+              </p>
+              <div className={styles.startRow}>
+                {talk.at < talk.lines.length - 1 ? (
+                  <button type="button" className={styles.enter} onClick={() => setTalk({ ...talk, at: talk.at + 1 })} autoFocus>
+                    {text.shower.next} →
+                  </button>
+                ) : (
+                  <>
+                    {mailto && (
+                      <a href={mailto} className={styles.enter}>
+                        {text.shower.invite}
+                      </a>
+                    )}
+                    <button type="button" className={styles.skip} onClick={endTalk} autoFocus>
+                      {text.shower.leave}
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

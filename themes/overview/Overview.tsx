@@ -156,6 +156,7 @@ export function Overview({ locale }: { locale: Locale }) {
   return (
     <OfficeGame
       text={t}
+      locale={locale}
       screen={screen}
       portraitSrc={profile.portrait.src}
       mailto={mailto}

@@ -21,7 +21,7 @@
   height: 100%;
 }
 
-.game:not([data-phase="play"]) .canvas {
+.game:not([data-phase="play"]):not([data-phase="talk"]) .canvas {
   filter: blur(6px) brightness(0.7);
   transform: scale(1.03);
 }
@@ -111,7 +111,7 @@
   font-weight: 600;
   text-align: center;
   translate: -50% 0;
-  animation: toast 3.2s var(--ease) both;
+  animation: toast 3.8s var(--ease) both;
   pointer-events: none;
 }
 
@@ -526,5 +526,110 @@
   .phone {
     animation: none;
     transform: rotate(-90deg);
+  }
+}
+
+/* ---- Easter eggs ---- */
+
+.toastSub {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: var(--text-sm);
+  color: #ffd36b;
+}
+
+.eggs {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgb(15 20 18 / 0.6);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* ---- The shower conversation: a game-style dialog box at the bottom ---- */
+
+.talkWrap {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  padding: 1rem;
+  animation: fade 250ms var(--ease);
+}
+
+.talk {
+  --ink: #f4f7f6;
+  --ink-2: #c9d4cf;
+
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  width: min(100%, 44rem);
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 20px;
+  background: rgb(14 26 32 / 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.6);
+}
+
+/* Face crop of the 800×800 portrait, like the CV photo. */
+.talkFace {
+  flex: none;
+  width: 3.6rem;
+  height: 3.6rem;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #7cc6d9;
+}
+
+.talkFace img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(2.6);
+  transform-origin: 58% 2%;
+}
+
+.talkBody {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.talkName {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7cc6d9;
+}
+
+.talkLine {
+  font-size: var(--text-lg);
+  line-height: 1.45;
+  animation: fade 300ms var(--ease);
+}
+
+@media (max-height: 32rem) {
+  .talkWrap {
+    padding: 0.5rem;
+  }
+
+  .talk {
+    padding: 0.7rem 1rem;
+  }
+
+  .talkLine {
+    font-size: var(--text-base);
   }
 }
