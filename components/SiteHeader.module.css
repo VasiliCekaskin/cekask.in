@@ -107,6 +107,18 @@
   display: none;
 }
 
+/* Email: the one solid button in the bar, so it's easy to find. */
+.mail {
+  border-color: var(--button);
+  background: var(--button);
+  color: var(--accent-ink);
+}
+
+.mail:hover {
+  border-color: var(--button-hover);
+  background: var(--button-hover);
+}
+
 @media (max-width: 56rem) {
   .diyLong {
     display: none;
@@ -133,6 +145,16 @@
 
   .diy {
     padding-inline: 0.6rem;
+  }
+
+  /* Phones: icons only (the link text stays for screen readers). */
+  .diyShort {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 

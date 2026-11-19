@@ -125,6 +125,8 @@ export type UiText = {
   };
   /** Header link to the DIY with AI guides (full label, and the short one on phones). */
   diyNav: { label: string; short: string };
+  /** Header email button: opens the mail app with a prefilled subject. */
+  mailNav: { label: string; short: string; subject: string };
   /** Cookie banner and settings dialog (components/ConsentBanner.tsx). */
   consent: {
     label: string;

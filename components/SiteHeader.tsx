@@ -1,12 +1,14 @@
 import { DIY_URL, getContent, profile } from "@/content";
 import type { Locale } from "@/i18n/config";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { mailHref } from "./mailto";
 import { AllMottosButton, BrandLink } from "./OverviewLink";
 import { SpinButton } from "./SpinButton";
 import styles from "./SiteHeader.module.css";
 
 export function SiteHeader({ locale }: { locale: Locale }) {
   const { ui, site, mottos } = getContent(locale);
+  const mail = mailHref(ui.mailNav.subject);
 
   return (
     <header className={styles.header}>
@@ -27,6 +29,13 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <span className={styles.diyShort}>{ui.diyNav.short}</span>
             <span className="visually-hidden">{ui.newTab}</span>
           </a>
+          {mail && (
+            <a className={`${styles.diy} ${styles.mail}`} href={mail} title={profile.email ?? undefined}>
+              <span aria-hidden="true">✉️</span>
+              <span className={styles.diyLong}>{ui.mailNav.label}</span>
+              <span className={styles.diyShort}>{ui.mailNav.short}</span>
+            </a>
+          )}
           <span className={styles.divider} aria-hidden="true" />
           <AllMottosButton locale={locale} label={mottos.overview.all} />
           <SpinButton locale={locale} text={mottos.spin} names={mottos.names} />

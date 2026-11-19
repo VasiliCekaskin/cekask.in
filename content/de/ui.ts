@@ -22,6 +22,7 @@ export const ui: UiText = {
   },
 
   diyNav: { label: "DIY with AI Guides", short: "Guides" },
+  mailNav: { label: "E-Mail schreiben", short: "E-Mail", subject: "Kontakt über cekask.in" },
 
   consent: {
     label: "Cookie-Hinweis",
