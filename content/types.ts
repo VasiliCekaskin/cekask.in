@@ -12,20 +12,6 @@ export type ExternalLink = {
   url: string | null;
 };
 
-export type IntroVideo = {
-  /** MP4 (H.264 + AAC) in /public, e.g. "/intro.mp4". */
-  src: string;
-  /** Still image shown before playback, e.g. "/intro-poster.jpg". */
-  poster: string;
-  /** Pixel size of the video, so the page reserves the right box. */
-  width: number;
-  height: number;
-  /** Source pixels hidden at the top (e.g. empty wall above the head). Fullscreen still shows everything. */
-  cropTop?: number;
-  /** Optional WebVTT subtitles per language, e.g. { de: "/intro.de.vtt" }. */
-  captions: Partial<Record<"de" | "en", string>>;
-};
-
 /** Facts that are the same in every language. */
 export type Profile = {
   name: string;
@@ -38,10 +24,18 @@ export type Profile = {
   /** Green "capacity for consultation" flag on the services. False hides it. */
   hasCapacity: boolean;
   /**
-   * The intro video, self-hosted from /public so no third party is contacted.
-   * `null` hides the video block until the file exists.
+   * The big cheeky faces used all over the page (hero, surprise, game,
+   * peek-a-boo). Placeholders live in /public/faces; drop in your own
+   * images (PNG/JPG/SVG, roughly square, transparent background looks best)
+   * and point these paths at them.
    */
-  introVideo: IntroVideo | null;
+  faces: { grin: string; wink: string; shock: string };
+  /**
+   * The "ad" shown in Whack-a-Vasili when someone wants another round.
+   * `null` shows the built-in animated fake commercial; set it to your own
+   * MP4 in /public (e.g. { src: "/ad.mp4" }) to play that instead.
+   */
+  adVideo: { src: string; poster?: string } | null;
   email: string | null;
   social: {
     github: ExternalLink;
@@ -81,19 +75,8 @@ export type OffersText = {
   button: string;
   mailSubject: string;
   items: Offer[];
-};
-
-export type VideoText = {
-  /** Figure number in the caption, e.g. "Abb. 1". */
-  figure: string;
-  title: string;
-  /** One line under the video. */
-  caption: string;
-  /** Accessible name for the player. */
-  label: string;
-  fallback: string;
-  /** Alt text for the portrait shown until the video exists. */
-  photoAlt: string;
+  /** Box under the services: pro-bono work for good causes. */
+  charity: { title: string; text: string; button: string; mailSubject: string };
 };
 
 /** Short proof points under the intro. */
@@ -143,14 +126,275 @@ export type UiText = {
   };
 };
 
+/** All the playful bits: the clickable face, stickers, surprise, game. */
+export type FunText = {
+  /** Alt text for the big face. */
+  faceAlt: string;
+  /** Tiny label next to the face. */
+  faceHint: string;
+  /** Speech bubbles cycled when someone pokes the face. */
+  faceLines: string[];
+  /** Words on the draggable stickers in the hero. */
+  stickers: string[];
+  dragHint: string;
+  /** Scrolling ticker between the sections. */
+  marquee: string[];
+  surprise: {
+    label: string;
+    title: string;
+    text: string;
+    button: string;
+    /** Headline of the reveal; the first one is "Ha! You didn't expect that". */
+    reveals: string[];
+    sub: string;
+    close: string;
+  };
+  game: {
+    label: string;
+    title: string;
+    intro: string;
+    start: string;
+    again: string;
+    score: string;
+    best: string;
+    time: string;
+    hitFace: string;
+    bugLabel: string;
+    faceLabel: string;
+    holeLabel: string;
+    /** End-of-round verdicts, picked by the highest `min` the score reaches. */
+    results: { min: number; text: string }[];
+    /** After a round: pay for another one with an email or an ad. */
+    paywall: {
+      title: string;
+      text: string;
+      contact: string;
+      contactSubject: string;
+      contactThanks: string;
+      ad: string;
+    };
+    ad: {
+      badge: string;
+      /** "Continue in" — followed by the seconds left. */
+      wait: string;
+      continue: string;
+      /** Lines of the fake commercial, shown one after another. */
+      slides: string[];
+      cta: string;
+      fine: string;
+    };
+  };
+  peek: { text: string; label: string };
+};
+
+/** The mottos the "spin" button cycles through. Each is a whole different page. */
+export type MottoId =
+  | "pro"
+  | "clarity"
+  | "vibe"
+  | "terminal"
+  | "paper"
+  | "receipt"
+  | "rpg"
+  | "wanted"
+  | "chat"
+  | "recipe"
+  | "boarding";
+
+/** The recommended motto: big, shiny, only the essentials. */
+export type ClarityText = {
+  badge: string;
+  headline: string;
+  sub: string;
+  skillsTitle: string;
+  /** Keep it to the four that matter most. */
+  skills: string[];
+  cta: string;
+  secondary: string;
+};
+
+export type RpgText = {
+  sheet: string;
+  charClass: string;
+  level: string;
+  xp: string;
+  statsTitle: string;
+  stats: { label: string; value: number }[];
+  inventoryTitle: string;
+  inventory: string[];
+  questsTitle: string;
+  reward: string;
+  sideQuest: string;
+  specialTitle: string;
+  special: string;
+  cta: string;
+};
+
+export type WantedText = {
+  wanted: string;
+  by: string;
+  alias: string;
+  chargesTitle: string;
+  charges: string[];
+  reward: string;
+  rewardText: string;
+  lastSeen: string;
+  sightingsTitle: string;
+  tips: string;
+  photoAlt: string;
+};
+
+export type ChatText = {
+  status: string;
+  typing: string;
+  greeting: string[];
+  /** Quick replies; the answer to "offers", "charity" and "contact" is built from shared content. */
+  questions: { id: "about" | "skills" | "offers" | "charity" | "contact" | "hire"; q: string; a: string[] }[];
+  repliesLabel: string;
+};
+
+export type RecipeText = {
+  kicker: string;
+  title: string;
+  meta: string[];
+  ingredientsTitle: string;
+  ingredients: string[];
+  stepsTitle: string;
+  steps: string[];
+  tipTitle: string;
+  tip: string;
+  sidesTitle: string;
+  cta: string;
+};
+
+export type BoardingText = {
+  airline: string;
+  pass: string;
+  passengerLabel: string;
+  from: { code: string; city: string };
+  to: { code: string; city: string };
+  fields: { label: string; value: string }[];
+  baggageTitle: string;
+  baggage: string[];
+  extrasTitle: string;
+  cta: string;
+  notice: string;
+};
+
+export type ProText = {
+  eyebrow: string;
+  summaryTitle: string;
+  summary: string[];
+  contactTitle: string;
+  skillsTitle: string;
+  skills: { group: string; items: string[] }[];
+  experienceTitle: string;
+  experience: { period: string; title: string; place: string; points: string[] }[];
+  projectsTitle: string;
+  projects: { name: string; url: string | null; text: string }[];
+  sideTitle: string;
+  languagesTitle: string;
+  languages: string[];
+  photoAlt: string;
+};
+
+export type TerminalText = {
+  /** Shown in the prompt, e.g. "guest@vasili". */
+  user: string;
+  boot: string[];
+  inputLabel: string;
+  chipsLabel: string;
+  help: { cmd: string; desc: string }[];
+  whoami: string[];
+  ls: string;
+  notFound: string;
+  sudo: string;
+  game: string;
+  hire: string;
+  spin: string;
+  offersHead: string;
+  contactHead: string;
+};
+
+export type PaperText = {
+  masthead: string;
+  tagline: string;
+  dateline: string;
+  kicker: string;
+  headline: string;
+  subhead: string;
+  photoCaption: string;
+  article: string[];
+  quote: string;
+  quoteBy: string;
+  factsTitle: string;
+  classifiedsTitle: string;
+  classifiedsCta: string;
+  weatherTitle: string;
+  weather: string;
+  horoscopeTitle: string;
+  horoscope: string;
+  charityTitle: string;
+  lettersTitle: string;
+  letters: string;
+};
+
+export type ReceiptText = {
+  store: string;
+  address: string;
+  meta: string[];
+  items: { label: string; price: string }[];
+  extrasTitle: string;
+  discount: { label: string; price: string };
+  totalLabel: string;
+  total: string;
+  payment: string;
+  thanks: string[];
+  redeem: string;
+  charity: string;
+};
+
+export type MottosText = {
+  spin: { label: string; spinning: string; announce: string };
+  /** The shiny shortcut to the recommended motto. */
+  recommend: { label: string; hint: string };
+  names: Record<MottoId, string>;
+  /** The home page overview: introduction plus a preview card per motto. */
+  overview: {
+    eyebrow: string;
+    /** Big call to action: roll a random motto. */
+    roll: string;
+    rollHint: string;
+    gridTitle: string;
+    gridSub: string;
+    /** Label on each preview card, e.g. "Open". */
+    open: string;
+    /** Header button back to the overview. */
+    all: string;
+  };
+  /** One line per motto for its preview card. */
+  blurbs: Record<MottoId, string>;
+  pro: ProText;
+  terminal: TerminalText;
+  paper: PaperText;
+  receipt: ReceiptText;
+  clarity: ClarityText;
+  rpg: RpgText;
+  wanted: WantedText;
+  chat: ChatText;
+  recipe: RecipeText;
+  boarding: BoardingText;
+};
+
 /** Everything a page needs in one language. Both locales must match it. */
 export type Content = {
   site: SiteText;
   facts: Fact[];
-  video: VideoText;
+  fun: FunText;
   offers: OffersText;
   contact: ContactText;
   ui: UiText;
+  mottos: MottosText;
 };
 
 export type LegalConfig = {

@@ -1,0 +1,154 @@
+.section {
+  padding-block: var(--space-section);
+}
+
+.panel {
+  display: grid;
+  justify-items: center;
+  gap: 1.1rem;
+  padding: clamp(2rem, 1.5rem + 3vw, 3.5rem) clamp(1.25rem, 1rem + 2vw, 3rem);
+  border: var(--border);
+  border-radius: calc(var(--radius) * 1.5);
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 18px, color-mix(in srgb, var(--pop-2) 35%, transparent) 18px 36px),
+    var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.title {
+  max-width: 18ch;
+  font-size: var(--text-2xl);
+}
+
+.text {
+  max-width: 40ch;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+/* The big red arcade button. */
+.bigRed {
+  display: grid;
+  place-items: center;
+  width: clamp(9rem, 7rem + 8vw, 12rem);
+  aspect-ratio: 1;
+  margin-top: 1rem;
+  padding: 0;
+  border: var(--border);
+  border-radius: 50%;
+  background: #6b0f0f;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff8a8a, #ff2d2d 45%, #c40d0d);
+  color: #fff;
+  font-size: var(--text-lg);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 0.35);
+  transform: translateY(-10px);
+  transition: transform 90ms var(--ease);
+  animation: tempt 2.4s ease-in-out infinite;
+}
+
+.bigRed:hover .cap {
+  transform: translateY(-13px);
+}
+
+.bigRed:active .cap {
+  transform: translateY(-2px);
+}
+
+@keyframes tempt {
+  0%,
+  86%,
+  100% {
+    rotate: 0deg;
+  }
+  90% {
+    rotate: -6deg;
+  }
+  95% {
+    rotate: 6deg;
+  }
+}
+
+/* ---- The reveal ---- */
+.dialog {
+  width: min(92vw, 40rem);
+  max-height: 92vh;
+  padding: 0;
+  border: var(--border);
+  border-radius: calc(var(--radius) * 1.5);
+  background: var(--pop-2);
+  color: #17131f;
+  box-shadow: 10px 10px 0 var(--ink);
+  overflow: auto;
+}
+
+.dialog::backdrop {
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%, rgb(255 62 165 / 0.85) 0 10deg, rgb(58 134 255 / 0.85) 10deg 20deg);
+  animation: spin 14s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    background-position: 0 0;
+    filter: hue-rotate(360deg);
+  }
+}
+
+.reveal {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 1.75rem 1.25rem 1.75rem;
+  text-align: center;
+  animation: slam 600ms var(--bounce);
+}
+
+@keyframes slam {
+  from {
+    transform: scale(0.2) rotate(-25deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.ha {
+  font-size: clamp(2rem, 1.3rem + 3.5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  transform: rotate(-3deg);
+  text-shadow: 3px 3px 0 #ff3ea5;
+}
+
+.face {
+  width: min(70vw, 22rem);
+  height: auto;
+  animation: wobble 900ms 400ms var(--ease);
+}
+
+.sub {
+  max-width: 32ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  font-weight: 500;
+}

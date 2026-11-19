@@ -1,0 +1,11 @@
+/* Each new motto drops in like a slot-machine reel. */
+.stage {
+  animation: reel 480ms var(--bounce);
+}
+
+@keyframes reel {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.98);
+  }
+}

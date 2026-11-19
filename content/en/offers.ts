@@ -1,4 +1,4 @@
-import type { Fact, OffersText, VideoText } from "../types";
+import type { Fact, OffersText } from "../types";
 
 export const facts: Fact[] = [
   { value: "7 years", label: "Software engineering, incl. training" },
@@ -9,15 +9,6 @@ export const facts: Fact[] = [
     link: { label: "trackdemos.com", url: "https://trackdemos.com" },
   },
 ];
-
-export const video: VideoText = {
-  figure: "Fig. 1",
-  title: "A quick introduction",
-  caption: "One minute about me, my work, and what I bring to a team.",
-  label: "Introduction video by Vasili Cekaskin",
-  fallback: "Your browser can't play this video.",
-  photoAlt: "Vasili Cekaskin smiling on a terrace by the sea at sunset",
-};
 
 /**
  * Services offered on the side (sole proprietorship).
@@ -56,4 +47,10 @@ export const offers: OffersText = {
       format: "By the hour, on video",
     },
   ],
+  charity: {
+    title: "Got something for a good cause?",
+    text: "Hey, I know my way around. If you have something for a charity, contact me: when I have time, I'm open to building something like that for free.",
+    button: "Tell me about your project",
+    mailSubject: "Charity project",
+  },
 };

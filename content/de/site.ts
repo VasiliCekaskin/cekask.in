@@ -3,7 +3,8 @@ import type { SiteText } from "../types";
 export const site: SiteText = {
   role: "Softwareentwickler",
   location: "Raum Düsseldorf",
-  headline: "Softwareentwickler aus der Finanz- und Versicherungsbranche. Bereit für die *nächste Herausforderung.*",
+  // \u00AD = soft hyphen: lets the long compounds break in the big headline.
+  headline: "Software\u00ADentwickler aus der Finanz- und Versicherungs\u00ADbranche. Bereit für die *nächste Heraus\u00ADforderung.*",
   intro:
     "Ich bin Vasili und entwickle in Festanstellung Webanwendungen und AWS-Infrastruktur, die täglich in Produktion laufen. Jetzt suche ich eine neue Stelle und freue mich über Ihre Einladung zum Gespräch.",
 

@@ -1,0 +1,134 @@
+.wall {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding-block: clamp(2rem, 1.5rem + 3vw, 4rem) var(--space-section);
+}
+
+/* Aged paper: warm gradient, burnt edges, a slight tilt. */
+.poster {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 0.6rem;
+  width: min(100%, 34rem);
+  padding: 2.5rem clamp(1.25rem, 1rem + 2vw, 2.5rem) 2.25rem;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgb(92 52 18 / 0.35) 100%),
+    linear-gradient(170deg, #f1dfb5, #e5c88e 60%, #d9b373);
+  color: #3b2412;
+  box-shadow: 0 25px 50px -20px rgb(0 0 0 / 0.55);
+  font-family: var(--font-serif);
+  text-align: center;
+  transform: rotate(1.2deg);
+  clip-path: polygon(0 1%, 4% 0, 30% 1%, 55% 0, 80% 1%, 100% 0, 99% 30%, 100% 60%, 99% 100%, 70% 99%, 40% 100%, 12% 99%, 0 100%, 1% 60%, 0 30%);
+}
+
+.nail {
+  position: absolute;
+  top: 0.8rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #c9c9c9, #555);
+  box-shadow: 0 2px 2px rgb(0 0 0 / 0.5);
+}
+
+.wanted {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 1.2rem + 7vw, 5.2rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #3b2412;
+}
+
+.by {
+  font-size: var(--text-lg);
+  font-style: italic;
+}
+
+.photo {
+  width: 78%;
+  aspect-ratio: 4 / 3.4;
+  overflow: hidden;
+  margin-block: 0.5rem;
+  border: 6px solid #3b2412;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Top-aligned, then zoomed to the head: shows roughly x 266–614, y 16–312
+     of the 800×800 portrait. */
+  object-position: 50% 0%;
+  transform: scale(2.3);
+  transform-origin: 58.8% 4.2%;
+  filter: sepia(1) contrast(1.15) brightness(0.95);
+}
+
+.name {
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.alias {
+  font-style: italic;
+}
+
+.h2 {
+  margin-bottom: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.charges,
+.sightings {
+  width: 100%;
+  padding-block: 0.7rem;
+  border-block: 2px solid #3b2412;
+}
+
+.charges ul,
+.sightings ul {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reward {
+  margin-top: 0.4rem;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: #8c1d10;
+}
+
+.rewardText {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.lastSeen {
+  font-size: var(--text-sm);
+  font-style: italic;
+}
+
+.tips {
+  font-weight: 700;
+}
+
+.email {
+  color: #8c1d10;
+  overflow-wrap: anywhere;
+}

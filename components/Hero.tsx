@@ -3,20 +3,19 @@ import type { Locale } from "@/i18n/config";
 import { AvailabilityFlag } from "./AvailabilityFlag";
 import { Emphasis } from "./Emphasis";
 import { ArrowUpRightIcon } from "./icons";
-import { IntroVideo, showVideoSlot } from "./IntroVideo";
 import { mailHref } from "./mailto";
+import { PokeFace } from "./PokeFace";
+import { Stickers } from "./Stickers";
 import styles from "./Hero.module.css";
 
+const FACT_COLORS = ["var(--pop-3)", "var(--pop-4)", "var(--pop-1)"];
+
 export function Hero({ locale }: { locale: Locale }) {
-  const { site, facts, contact, ui } = getContent(locale);
+  const { site, facts, contact, ui, fun } = getContent(locale);
   const mailto = mailHref(contact.mailSubject);
-  const hasVideo = showVideoSlot;
 
   return (
-    <section
-      className={`container ${styles.hero} ${hasVideo ? styles.withVideo : ""}`}
-      aria-labelledby="intro-title"
-    >
+    <section className={`container ${styles.hero}`} aria-labelledby="intro-title">
       <div className={styles.text}>
         <AvailabilityFlag show={profile.openToWork} text={site.availability} />
 
@@ -28,24 +27,28 @@ export function Hero({ locale }: { locale: Locale }) {
         <div className={styles.actions}>
           {mailto && (
             <a href={mailto} className="button">
-              {contact.button}
+              {contact.button} <span aria-hidden="true">✉️</span>
             </a>
           )}
-          <a href="#offers" className="quiet-link">
+          <a href="#offers" className="button button-secondary">
             {ui.seeOffers}
           </a>
         </div>
+        <p className={styles.dragHint}>{fun.dragHint}</p>
       </div>
 
-      {hasVideo && (
-        <div className={styles.media}>
-          <IntroVideo locale={locale} />
-        </div>
-      )}
+      <div className={styles.art}>
+        <PokeFace faces={profile.faces} alt={fun.faceAlt} hint={fun.faceHint} lines={fun.faceLines} />
+        <Stickers words={fun.stickers} />
+      </div>
 
       <dl className={styles.facts} aria-label={ui.factsLabel}>
-        {facts.map((fact) => (
-          <div key={fact.value} className={styles.fact}>
+        {facts.map((fact, i) => (
+          <div
+            key={fact.value}
+            className={styles.fact}
+            style={{ "--c": FACT_COLORS[i % FACT_COLORS.length] } as React.CSSProperties}
+          >
             <dt>{fact.value}</dt>
             <dd>
               {fact.label}

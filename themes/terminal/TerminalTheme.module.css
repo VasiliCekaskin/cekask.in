@@ -1,0 +1,136 @@
+.wrap {
+  display: grid;
+  gap: 1.25rem;
+  padding-block: clamp(1.5rem, 1rem + 3vw, 3.5rem) var(--space-section);
+}
+
+.window {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px #000, 0 20px 60px -20px color-mix(in srgb, var(--accent) 40%, transparent);
+  cursor: text;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-sunk);
+}
+
+.bar span {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.bar span:nth-child(2) {
+  background: #febc2e;
+}
+
+.bar span:nth-child(3) {
+  background: #28c840;
+}
+
+.bar p {
+  margin-left: 0.5rem;
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+/* CRT glow and scanlines. */
+.screen {
+  min-height: 60vh;
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 1rem 1.1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 0.75rem + 0.3vw, 0.95rem);
+  line-height: 1.55;
+  text-shadow: 0 0 6px color-mix(in srgb, var(--ink) 45%, transparent);
+  background-image: repeating-linear-gradient(transparent 0 2px, rgb(0 0 0 / 0.18) 2px 3px);
+}
+
+.screen p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.in {
+  margin-top: 0.6rem;
+  color: var(--ink);
+}
+
+.out {
+  color: var(--ink-2);
+}
+
+.head {
+  margin-top: 0.3rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.err {
+  color: #ff7b72;
+}
+
+.screen a {
+  color: var(--accent);
+}
+
+.prompt {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  caret-color: var(--accent);
+  caret-shape: block;
+  outline: none;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chips button {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.chips button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chips button::before {
+  content: "$ ";
+  color: var(--ink-3);
+}

@@ -79,11 +79,12 @@ export default async function OpenGraphImage({ params }: { params: LocaleParams 
     readFile(join(process.cwd(), "assets/og-fonts/Newsreader-Italic.woff")),
     readFile(join(process.cwd(), "public", profile.portrait.src)),
   ]);
-  const portraitSrc = `data:image/jpeg;base64,${portrait.toString("base64")}`;
+  const portraitSrc = `data:image/png;base64,${portrait.toString("base64")}`;
 
   // The headline with its *emphasis* in italic sage, split into words so
   // satori can wrap it like running text.
   const words = site.headline
+    .replace(/\u00AD/g, "") // soft hyphens are for the web page only
     .split(/\*(.+?)\*/g)
     .flatMap((part, i) =>
       part

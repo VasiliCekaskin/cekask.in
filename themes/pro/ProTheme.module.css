@@ -1,0 +1,418 @@
+/* "Totally professional": a clean CV on white. Sans-serif throughout,
+   one sage accent, a grey sidebar panel, a timeline rail. */
+
+.cv {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  max-width: calc(64rem + 2 * var(--gutter));
+  padding-block: clamp(1.75rem, 1.25rem + 2.5vw, 3.5rem) var(--space-section);
+}
+
+/* ---- Header ---- */
+
+.head {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.75rem;
+}
+
+/* The portrait, cropped to the face. */
+.photo {
+  flex: none;
+  width: clamp(6.5rem, 5rem + 5vw, 9rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--surface-sunk);
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 0 0 5px var(--line-strong);
+}
+
+/* Zoom in on the face: in the 800×800 portrait the head (cap to chin)
+   spans about x 340–545, y 20–270. This shows roughly x 286–594, y 10–318. */
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(2.6);
+  transform-origin: 58% 2%;
+}
+
+.headText {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: clamp(2.1rem, 1.5rem + 2.8vw, 3.4rem);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.role {
+  font-size: var(--text-lg);
+  color: var(--ink-2);
+}
+
+.headBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+/* Key facts strip under the header. */
+.facts {
+  display: grid;
+  margin: 0;
+  border-block: 1px solid var(--line);
+}
+
+.fact {
+  display: grid;
+  gap: 0.15rem;
+  padding: 1rem 0;
+}
+
+.fact + .fact {
+  border-top: 1px solid var(--line);
+}
+
+.factValue {
+  font-size: var(--text-lg);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.factLabel {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+/* ---- Body ---- */
+
+.grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.main {
+  display: grid;
+  align-content: start;
+  gap: 2.75rem;
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.h2::before {
+  content: "";
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.h4 {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.lead {
+  max-width: 62ch;
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.p {
+  max-width: 62ch;
+  color: var(--ink-2);
+}
+
+.lead + .p,
+.p + .p {
+  margin-top: 0.75rem;
+}
+
+/* Experience on a rail with a dot per entry. */
+.timeline {
+  display: grid;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--line);
+  list-style: none;
+}
+
+.entry {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.entry::before {
+  content: "";
+  position: absolute;
+  top: 0.3rem;
+  left: calc(-1.5rem - 6px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.entry:first-child::before {
+  background: var(--accent);
+}
+
+.period {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.place {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.points {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+  padding-left: 1.1rem;
+  color: var(--ink-2);
+}
+
+.points li::marker {
+  color: var(--line-strong);
+}
+
+.projects {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.project a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.project a:hover {
+  color: var(--accent);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.table tr:first-child th,
+.table tr:first-child td {
+  border-top: 1px solid var(--line);
+}
+
+.table th {
+  font-weight: 600;
+}
+
+.table td {
+  padding-left: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.tableNote {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+/* ---- Sidebar: a quiet grey panel ---- */
+
+.side {
+  display: grid;
+  align-content: start;
+  gap: 1.75rem;
+  padding: 1.5rem;
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--surface-sunk);
+}
+
+.sideH2 {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+
+.list a {
+  color: var(--ink);
+  text-decoration-color: var(--line-strong);
+}
+
+.skillGroup + .skillGroup {
+  margin-top: 1rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  font-size: var(--text-sm);
+}
+
+@media (min-width: 40rem) {
+  .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fact {
+    padding: 1.1rem 1.25rem;
+  }
+
+  .fact:first-child {
+    padding-left: 0;
+  }
+
+  .fact + .fact {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 56rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    column-gap: 3.5rem;
+  }
+
+  .side {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+  }
+}
+
+/* Printing: just the CV on white paper. */
+@media print {
+  .headBar :global(.button) {
+    display: none;
+  }
+
+  .cv {
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr) 14rem;
+    column-gap: 2rem;
+  }
+
+  .side {
+    position: static;
+    padding: 0;
+    background: none;
+  }
+
+  .project {
+    padding: 0;
+    border: 0;
+  }
+}

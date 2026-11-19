@@ -11,21 +11,21 @@ export const profile: Profile = {
   name: "Vasili Cekaskin",
   url: "https://cekask.in",
 
-  portrait: { src: "/vasili-portrait.jpg", width: 1200, height: 1500 },
+  portrait: { src: "/vasili-portrait.png", width: 800, height: 800 },
 
   openToWork: true,
   hasCapacity: true,
 
-  // Portrait phone video. Optional WebVTT subtitles go in `captions`,
-  // e.g. { de: "/intro.de.vtt" }.
-  introVideo: {
-    src: "/intro.mp4",
-    poster: "/intro-poster.jpg",
-    width: 464,
-    height: 832,
-    cropTop: 290,
-    captions: {},
+  // Placeholder cartoons. Swap in your own pictures later.
+  faces: {
+    grin: "/faces/grin.svg",
+    wink: "/faces/wink.svg",
+    shock: "/faces/shock.svg",
   },
+
+  // Your recorded ad for the game, e.g. { src: "/ad.mp4", poster: "/ad.jpg" }.
+  // While null, the game shows a built-in animated fake commercial.
+  adVideo: null,
 
   // TODO: confirm this mailbox exists — taken from the commit email used in
   // the TrackDemos repositories.

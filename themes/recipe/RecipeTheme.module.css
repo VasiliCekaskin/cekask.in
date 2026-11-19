@@ -1,0 +1,159 @@
+.wrap {
+  padding-block: clamp(1.5rem, 1rem + 3vw, 3.5rem) var(--space-section);
+}
+
+/* A recipe card on a checkered tablecloth (the page background). */
+.card {
+  display: grid;
+  gap: 2rem;
+  max-width: 54rem;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 1rem + 3vw, 3rem);
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(transparent 0 1.9rem, color-mix(in srgb, var(--accent) 12%, transparent) 1.9rem calc(1.9rem + 1px)),
+    var(--surface);
+  box-shadow: 0 20px 40px -20px rgb(0 0 0 / 0.4);
+  transform: rotate(-0.6deg);
+}
+
+.head {
+  display: grid;
+  gap: 0.6rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px dashed var(--line-strong);
+  text-align: center;
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem);
+  font-style: italic;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.meta li::before {
+  content: "⏱ ";
+}
+
+.meta li:nth-child(2)::before {
+  content: "👌 ";
+}
+
+.meta li:nth-child(3)::before {
+  content: "🍽 ";
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.h2 {
+  margin-bottom: 0.75rem;
+  font-size: var(--text-xl);
+  font-style: italic;
+  color: var(--accent);
+}
+
+.ingredients {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ingredients li {
+  padding-left: 1.6rem;
+  background: no-repeat left 0.35em / 1rem 1rem
+    radial-gradient(circle, var(--accent) 0 35%, transparent 38%);
+}
+
+.steps {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  padding-left: 2.6rem;
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -0.1rem;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--text-sm);
+}
+
+.tip {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-left: 5px solid var(--accent);
+  background: var(--surface-sunk);
+}
+
+.sides {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sides li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dotted var(--line-strong);
+}
+
+.price {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: 3rem;
+  }
+}

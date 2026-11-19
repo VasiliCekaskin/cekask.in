@@ -13,7 +13,7 @@ export const ui: UiText = {
 
   footer: {
     note: "No cookies, no tracking.",
-    colophon: "Set in Newsreader and Geist. Designed and built in Ratingen. Last updated November 2026.",
+    colophon: "Built in Ratingen · Last updated November 2026",
     legalLabel: "Legal",
     impressum: "Legal notice",
     datenschutz: "Privacy",

@@ -1,5 +1,11 @@
 .header {
-  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: var(--border);
+  background: var(--chrome-bg, color-mix(in srgb, var(--bg) 88%, transparent));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .inner {
@@ -10,6 +16,11 @@
   min-height: var(--header-height);
 }
 
+.brand,
+.tools {
+  min-width: 0;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -17,14 +28,77 @@
   text-decoration: none;
 }
 
+.logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--button);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.2rem;
+  transition: transform 300ms var(--bounce);
+}
+
+.brand:hover .logo {
+  transform: rotate(-8deg);
+}
+
+:global([data-motto="vibe"]) .logo {
+  transform: rotate(-8deg);
+}
+
+:global([data-motto="vibe"]) .brand:hover .logo {
+  transform: rotate(352deg) scale(1.1);
+}
+
 .name {
   display: grid;
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.25;
 }
 
 .role {
   font-weight: 400;
   color: var(--ink-3);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.divider {
+  width: 1px;
+  height: 1.5rem;
+  margin-inline: 0.2rem;
+  background: var(--line);
+}
+
+/* Phones: logo plus name only, tools shrink to icons. */
+@media (max-width: 40rem) {
+  .role {
+    display: none;
+  }
+
+  .tools {
+    gap: 0.25rem;
+  }
+
+  .divider {
+    display: none;
+  }
+}
+
+@media (max-width: 19rem) {
+  .name {
+    display: none;
+  }
 }

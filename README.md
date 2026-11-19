@@ -1,8 +1,8 @@
 # cekask.in
 
 Personal portfolio of Vasili Cekaskin. Next.js 16 (App Router), TypeScript,
-plain CSS Modules. Fully static, with no database, no client-side state,
-no tracking, and fonts served from the site itself.
+plain CSS Modules. Fully static, with no database, no tracking, and fonts
+served from the site itself. Loud, colorful and playable on purpose.
 
 ## Run
 
@@ -35,10 +35,12 @@ All personal facts live in `content/`. Components only render what's there.
 
 | File | What it holds |
 |---|---|
-| `content/profile.ts` | Facts that are the same in every language: name, domain, photos, email, social links, the two green flags, and the intro video |
+| `content/profile.ts` | Facts that are the same in every language: name, domain, photo, the cartoon faces, email, social links, and the two green flags |
 | `content/legal.ts` | Address, hosting provider, and other details for the legal pages |
 | `content/<locale>/site.ts` | Role, headline, intro, job-search flag text, SEO title and description |
-| `content/<locale>/offers.ts` | The three facts under the intro, the video caption, and the side services (Einzelunternehmen) with prices |
+| `content/<locale>/offers.ts` | The three facts under the intro and the side services (Einzelunternehmen) with prices |
+| `content/<locale>/mottos.ts` | Texts of every motto and of the spin and recommended buttons |
+| `content/<locale>/fun.ts` | All the playful text: face speech bubbles, stickers, ticker, the "don't press" surprise, the game, peek-a-boo |
 | `content/<locale>/contact.ts` | Contact block for job offers: heading, one sentence, button label, email subject, note |
 | `content/<locale>/ui.ts` | Interface labels and screen reader text |
 | `content/<locale>/legal.tsx` | Impressum and privacy policy text (German is binding, English is a translation) |
@@ -51,34 +53,57 @@ Conventions:
 - The page leads with the job search. `profile.openToWork = false` hides the
   "open to a new role" flag (also on the link preview card);
   `profile.hasCapacity = false` hides the consulting flag on the services.
-- **Intro video:** put an MP4 (H.264/AAC, ideally under ~20 MB) and a poster
-  image in `public/`, then set `profile.introVideo`, e.g.
-  `{ src: "/intro.mp4", poster: "/intro-poster.jpg", width: 1920, height: 1080, captions: { de: "/intro.de.vtt" } }`.
-  While it's `null` the video block is hidden. It's self-hosted, so no third
-  party is contacted, and nothing downloads until the visitor presses play.
-- Keep every offer to one line per field. The page is meant to fit in about
-  two screens.
+- **Faces:** the big grinning faces (hero, surprise, game, peek-a-boo,
+  contact) are placeholder cartoons in `public/faces/` (`grin`, `wink`,
+  `shock`). To use real pictures, drop roughly square images (transparent
+  PNGs look best) into `public/faces/` and point `profile.faces` at them.
+- **Game ad:** record your ad, put it in `public/` (e.g. `ad.mp4`) and set
+  `profile.adVideo = { src: "/ad.mp4" }`. It autoplays in the ad break.
+- Keep every offer to one line per field.
 - When you change text in one language, change the other one too.
 
-## Design notes
+## Mottos
 
-The page should read like something set by hand, not a template:
+The home page has several complete mottos: different concept, texts,
+look and fonts. The 🎰 button in the header spins to the next one (every
+motto comes up once before any repeats). Every page load starts with the
+professional CV, which is also what search engines see first.
 
-- **Short on purpose:** intro (video on the right when set) with three facts,
-  the side services, one contact block. Nothing else.
-- **Palette:** warm paper with a faint static grain, soft ink, one muted sage
-  accent, and green only for the status lamps. A quiet dark variant follows
-  the system setting. Tokens live at the top of `app/globals.css`.
-- **Typography:** Newsreader for headings and small italic notes, Geist for
-  text. In the headline, `*words in asterisks*` are set in sage italics.
-- **Editorial details:** section labels sit in a margin column (`.rail`);
-  the services are a numbered price list rather than cards; the email
-  address itself is the contact button; the footer carries a colophon with
-  a "last updated" date. Update that date when you change content.
-- **Technical-drawing nod:** the intro video sits inside corner marks with a
-  numbered caption ("Abb. 1"), a quiet reference to the Industriemechaniker
-  background.
-- **No animations.** Hovers only fade color or nudge an arrow by 3px.
+| Motto | Folder | What it is |
+|---|---|---|
+| Voll professionell | `themes/pro` | Plain, printable CV with photo; "Print / save as PDF" |
+| ✨ Klartext (recommended) | `themes/clarity` | Big and shiny, only the essentials: who, three numbers, four core skills, one button |
+| Voll vibecoded | `themes/vibe` | The loud sticker app: poke-the-face, stickers, "don't press", Whack-a-Vasili with paywall + ad, peek-a-boo |
+| Terminal | `themes/terminal` | Interactive shell (`help`, `skills`, `offers`, `hire`, `spin` …), with tap-able command chips |
+| Der Tagesvasili | `themes/paper` | Tabloid front page with classifieds (the services), weather, horoscope |
+| Kassenbon | `themes/receipt` | Vasili as a till receipt, with a barcode |
+| Charakterbogen | `themes/rpg` | RPG character sheet: level, attribute bars, inventory, services as quests |
+| Steckbrief | `themes/wanted` | Western "wanted" poster; reward: one job interview |
+| Chat | `themes/chat` | Messenger conversation with quick-reply questions |
+| Rezept | `themes/recipe` | Cookbook recipe for a strong dev team, on a checkered tablecloth |
+| Bordkarte | `themes/boarding` | Boarding pass, flight VC 007 from DUS to your team |
+
+The shiny ✨ "Recommended" button in the header jumps straight to Klartext.
+The RPG attribute values are playful self-ratings; adjust them in
+`content/<locale>/mottos.ts`.
+
+How it fits together:
+
+- `components/MottoStage.tsx` gets every motto pre-rendered from the server
+  and mounts only the active one. It sets `html[data-motto]`.
+- `lib/motto.ts` holds the current motto (in memory only).
+- `app/globals.css` defines the design tokens per motto, so the shared
+  header and footer change with it. The base tokens are the professional
+  look, also used by the legal pages and the 404.
+- Texts live in `content/<locale>/mottos.ts`; the vibecoded toys' texts in
+  `content/<locale>/fun.ts`. Services, prices and the email come from the
+  shared content, so they're the same in every motto.
+- Adding a motto: add its id to `MottoId` in `content/types.ts` and to
+  `MOTTOS` in `lib/motto.ts`, its texts to both `mottos.ts` files, its
+  tokens to `globals.css`, a component in `themes/<id>/`, and an entry in
+  `app/[locale]/page.tsx`.
+- Konami code (↑ ↑ ↓ ↓ ← → ← → B A) toggles party mode in every motto.
+- Motion respects `prefers-reduced-motion`.
 - Link previews: `app/[locale]/opengraph-image.tsx` renders a 1200×630 card
   per language at build time, using static font copies in `assets/og-fonts`.
 - Fonts live in `app/fonts` (SIL Open Font License) and load with

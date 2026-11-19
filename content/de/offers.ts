@@ -1,4 +1,4 @@
-import type { Fact, OffersText, VideoText } from "../types";
+import type { Fact, OffersText } from "../types";
 
 export const facts: Fact[] = [
   { value: "7 Jahre", label: "Softwareentwicklung, inkl. Ausbildung" },
@@ -9,15 +9,6 @@ export const facts: Fact[] = [
     link: { label: "trackdemos.com", url: "https://trackdemos.com" },
   },
 ];
-
-export const video: VideoText = {
-  figure: "Abb. 1",
-  title: "Kurz vorgestellt",
-  caption: "Eine Minute über mich, meine Arbeit und was ich mitbringe.",
-  label: "Vorstellungsvideo von Vasili Cekaskin",
-  fallback: "Ihr Browser kann dieses Video nicht abspielen.",
-  photoAlt: "Vasili Cekaskin lächelnd auf einer Terrasse am Meer bei Sonnenuntergang",
-};
 
 /**
  * Nebenbei angebotene Leistungen (Einzelunternehmen).
@@ -56,4 +47,10 @@ export const offers: OffersText = {
       format: "Stundenweise, per Video",
     },
   ],
+  charity: {
+    title: "Etwas für einen guten Zweck?",
+    text: "Hey, ich kenne die Wege. Wenn Sie etwas für einen gemeinnützigen Zweck haben, melden Sie sich: Wenn ich Zeit habe, baue ich so etwas gern kostenlos.",
+    button: "Erzählen Sie mir von Ihrem Projekt",
+    mailSubject: "Gemeinnütziges Projekt",
+  },
 };

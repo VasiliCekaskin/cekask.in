@@ -7,7 +7,7 @@ export function Emphasis({ text }: { text: string }) {
   );
 }
 
-/** The same text with the asterisks removed, for plain-text uses. */
+/** The same text without asterisks or soft hyphens, for plain-text uses. */
 export function plain(text: string) {
-  return text.replace(/\*(.+?)\*/g, "$1");
+  return text.replace(/\*(.+?)\*/g, "$1").replace(/\u00AD/g, "");
 }

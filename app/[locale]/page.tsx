@@ -1,12 +1,26 @@
-import { Contact } from "@/components/Contact";
-import { Hero } from "@/components/Hero";
-import { Offers } from "@/components/Offers";
+import { MottoStage } from "@/components/MottoStage";
 import { getContent, profile } from "@/content";
 import { getLocale, type LocaleParams } from "@/i18n/params";
+import { BoardingTheme } from "@/themes/boarding/BoardingTheme";
+import { ChatTheme } from "@/themes/chat/ChatTheme";
+import { ClarityTheme } from "@/themes/clarity/ClarityTheme";
+import { PaperTheme } from "@/themes/paper/PaperTheme";
+import { ProTheme } from "@/themes/pro/ProTheme";
+import { ReceiptTheme } from "@/themes/receipt/ReceiptTheme";
+import { RecipeTheme } from "@/themes/recipe/RecipeTheme";
+import { RpgTheme } from "@/themes/rpg/RpgTheme";
+import { TerminalTheme } from "@/themes/terminal/TerminalTheme";
+import { VibeTheme } from "@/themes/vibe/VibeTheme";
+import { WantedTheme } from "@/themes/wanted/WantedTheme";
+import { Overview } from "@/themes/overview/Overview";
+import { mailHref } from "@/components/mailto";
 
 export default async function HomePage({ params }: { params: LocaleParams }) {
   const locale = await getLocale(params);
-  const { site, offers } = getContent(locale);
+  const { site, offers, contact, ui, mottos } = getContent(locale);
+  const links = [profile.social.linkedin, profile.social.github]
+    .filter((l) => l.url)
+    .map((l) => ({ label: l.label, url: l.url! }));
 
   // Structured data so search engines understand who this page is about
   // and what is offered.
@@ -42,9 +56,47 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
           __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <Hero locale={locale} />
-      <Offers locale={locale} />
-      <Contact locale={locale} />
+      {/* The overview first; every motto is a whole page, rolled or picked from there. */}
+      <MottoStage
+        overview={<Overview locale={locale} />}
+        stages={{
+          pro: <ProTheme locale={locale} />,
+          vibe: <VibeTheme locale={locale} />,
+          terminal: (
+            <TerminalTheme
+              title={`${profile.name} — ${site.role}`}
+              text={mottos.terminal}
+              cv={mottos.pro}
+              offers={offers.items}
+              onRequest={ui.onRequest}
+              charity={offers.charity.text}
+              email={profile.email}
+              mailSubject={contact.mailSubject}
+              links={links}
+            />
+          ),
+          paper: <PaperTheme locale={locale} />,
+          receipt: <ReceiptTheme locale={locale} />,
+          clarity: <ClarityTheme locale={locale} />,
+          rpg: <RpgTheme locale={locale} />,
+          wanted: <WantedTheme locale={locale} />,
+          chat: (
+            <ChatTheme
+              name={profile.name}
+              avatar={profile.faces.grin}
+              text={mottos.chat}
+              offers={offers.items}
+              onRequest={ui.onRequest}
+              charity={offers.charity.text}
+              email={profile.email}
+              contactHref={mailHref(contact.mailSubject)}
+              hireHref={mailHref(contact.mailSubject)}
+            />
+          ),
+          recipe: <RecipeTheme locale={locale} />,
+          boarding: <BoardingTheme locale={locale} />,
+        }}
+      />
     </>
   );
 }

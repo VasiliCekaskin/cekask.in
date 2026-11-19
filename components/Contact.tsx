@@ -1,36 +1,37 @@
+import Image from "next/image";
 import { getContent, profile } from "@/content";
 import type { Locale } from "@/i18n/config";
 import { AvailabilityFlag } from "./AvailabilityFlag";
+import { ConfettiLink } from "./ConfettiLink";
 import { mailHref } from "./mailto";
 import styles from "./Contact.module.css";
 
-/** The address itself is the call to action. */
+/** The grand finale: a huge email button with confetti. */
 export function Contact({ locale }: { locale: Locale }) {
-  const { contact, site, ui } = getContent(locale);
+  const { contact, site } = getContent(locale);
   const mailto = mailHref(contact.mailSubject);
 
   return (
-    <section id="contact" className={`container rail ${styles.contact}`} aria-labelledby="contact-title">
-      <p className="rail-label" aria-hidden="true">
-        {ui.sections.contact}
-      </p>
-
-      <div className={styles.body}>
-        <AvailabilityFlag show={profile.openToWork} text={site.availability} />
-        <h2 id="contact-title" className={styles.title}>
-          {contact.title}
-        </h2>
-        <p className={styles.text}>{contact.text}</p>
-        {mailto && (
-          <a href={mailto} className={styles.email}>
-            {profile.email}
-            <span className={styles.arrow} aria-hidden="true">
-              →
-            </span>
-            <span className="visually-hidden"> ({contact.button})</span>
-          </a>
-        )}
-        {contact.note && <p className={styles.note}>{contact.note}</p>}
+    <section id="contact" className={`container ${styles.contact}`} aria-labelledby="contact-title">
+      <div className={styles.card}>
+        <Image src={profile.faces.wink} alt="" width={240} height={240} unoptimized className={styles.face} />
+        <div className={styles.body}>
+          <AvailabilityFlag show={profile.openToWork} text={site.availability} />
+          <h2 id="contact-title" className={styles.title}>
+            {contact.title}
+          </h2>
+          <p className={styles.text}>{contact.text}</p>
+          {mailto && (
+            <ConfettiLink href={mailto} className={styles.email}>
+              <span>{profile.email}</span>
+              <span className={styles.arrow} aria-hidden="true">
+                ✉️
+              </span>
+              <span className="visually-hidden"> ({contact.button})</span>
+            </ConfettiLink>
+          )}
+          {contact.note && <p className={styles.note}>{contact.note}</p>}
+        </div>
       </div>
     </section>
   );

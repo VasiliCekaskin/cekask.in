@@ -1,5 +1,26 @@
 .contact {
-  padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+  padding-block: var(--space-section);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  border: var(--border);
+  border-radius: calc(var(--radius) * 1.5);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--pop-1) 22%, var(--surface)), color-mix(in srgb, var(--pop-3) 22%, var(--surface)));
+  box-shadow: var(--shadow);
+}
+
+.face {
+  width: clamp(7rem, 5rem + 10vw, 13rem);
+  height: auto;
+  justify-self: center;
+  transform: rotate(-8deg);
+  animation: float 5s ease-in-out infinite;
+  --r: -8deg;
 }
 
 .body {
@@ -15,44 +36,62 @@
 .text {
   max-width: 46ch;
   color: var(--ink-2);
+  font-weight: 500;
 }
 
-/* The email address, set large in the serif, is the button. */
+/* The email address is the button, and it's huge. */
 .email {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.4em;
-  margin-top: 0.25rem;
-  font-family: var(--font-serif);
-  font-size: clamp(1.6rem, 1.1rem + 2.6vw, 2.75rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-  text-decoration-color: var(--line-strong);
-  transition: text-decoration-color 200ms var(--ease);
+  max-width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.3rem;
+  border: var(--border);
+  border-radius: 999px;
+  background: var(--pop-2);
+  color: var(--on-pop);
+  box-shadow: var(--shadow);
+  font-size: clamp(1.15rem, 0.8rem + 2vw, 2.1rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-decoration: none;
   overflow-wrap: anywhere;
+  transition:
+    transform 180ms var(--bounce),
+    box-shadow 180ms var(--ease);
 }
 
 .email:hover {
-  text-decoration-color: var(--accent);
+  transform: rotate(-2deg) scale(1.03);
+}
+
+.email:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 .arrow {
-  font-family: var(--font-sans);
-  font-size: 0.6em;
-  color: var(--accent);
-  transition: transform 200ms var(--ease);
+  font-size: 0.8em;
+  transition: transform 200ms var(--bounce);
 }
 
 .email:hover .arrow {
-  transform: translateX(3px);
+  transform: translateX(4px) rotate(12deg);
 }
 
 .note {
-  font-size: var(--text-sm);
-  color: var(--ink-3);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--ink-2);
+}
+
+@media (min-width: 52rem) {
+  .card {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 3rem;
+  }
 }

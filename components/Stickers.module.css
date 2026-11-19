@@ -1,0 +1,50 @@
+.board {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.sticker {
+  position: absolute;
+  padding: 0.35rem 0.85rem;
+  border: var(--border);
+  border-radius: 12px;
+  background: var(--c);
+  color: var(--on-pop);
+  box-shadow: var(--shadow-sm);
+  font-weight: 800;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  pointer-events: auto;
+  transform: rotate(var(--r));
+  animation: float 4s ease-in-out infinite;
+  transition: scale 150ms var(--bounce), box-shadow 150ms var(--ease);
+}
+
+/* The white sticker needs dark text even on the dark vibe. */
+.sticker:last-child {
+  color: var(--ink);
+}
+
+.sticker:hover {
+  scale: 1.08;
+}
+
+.sticker[data-dragging="true"] {
+  cursor: grabbing;
+  scale: 1.15;
+  box-shadow: 8px 10px 0 var(--ink);
+  animation-play-state: paused;
+  z-index: 5;
+}
+
+@media (max-width: 30rem) {
+  .sticker {
+    font-size: var(--text-xs);
+    padding: 0.25rem 0.6rem;
+  }
+}
