@@ -180,10 +180,12 @@ export function DatenschutzText() {
         werden dann gelöscht: <ConsentSettingsButton label="Cookie-Einstellungen öffnen" />
       </p>
       <p>
-        <strong>Fortschritt in der Anleitung (diywithai.cekask.in).</strong> Damit Sie die
-        Anleitung später fortsetzen können, speichert die Website Ihre Antworten zum Start (welcher
-        Computer, welche KI, ob sie schon installiert ist, ob Sie eine Domain haben) und welche
-        Schritte Sie erledigt haben. Das ist für die von Ihnen genutzte Funktion erforderlich (§ 25
+        <strong>Fortschritt in den Anleitungen (diywithai.cekask.in).</strong> Damit Sie eine
+        Anleitung später fortsetzen können, speichert die Website je Anleitung Ihre Antworten zum
+        Start (z. B. welcher Computer, welche KI, ob sie schon installiert ist, ob Sie eine Domain
+        haben, womit Ihre Website gebaut ist) und welche Schritte Sie erledigt haben. Die
+        Google-Anleitung übernimmt dabei Ihre Antworten aus der Website-Anleitung, damit Sie sie
+        nicht zweimal eingeben müssen. Das ist für die von Ihnen genutzte Funktion erforderlich (§ 25
         Abs. 2 Nr. 2 TDDDG). Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Über „Neu anfangen“ in
         der Anleitung löschen Sie diese Angaben jederzeit. Angaben zu Ihrem Unternehmen geben Sie auf
         dieser Website nicht ein; die Prompts werden nur in Ihre Zwischenablage kopiert.
@@ -208,7 +210,7 @@ export function DatenschutzText() {
       <p>
         Die Anleitungen auf diywithai.cekask.in erklären, wie Sie mit Ihrer eigenen KI (zum Beispiel
         Claude Code von Anthropic oder Codex von OpenAI) Aufgaben erledigen, etwa eine Website bauen,
-        und dafür Konten bei Diensten wie GitHub, Cloudflare oder einem Domain-Anbieter nutzen. Diese Website verbindet
+        und dafür Konten bei Diensten wie GitHub, Cloudflare, Google (Search Console, Unternehmensprofil) oder einem Domain-Anbieter nutzen. Diese Website verbindet
         sich mit keinem dieser Dienste und erhält keine Daten von ihnen. Was Sie in Ihre KI eingeben
         und welche Konten Sie anlegen, verarbeiten die jeweiligen Anbieter in eigener Verantwortung
         nach ihren eigenen Datenschutzbestimmungen. Ich habe keinen Zugriff auf diese Konten.

@@ -191,9 +191,11 @@ export function DatenschutzText() {
         <ConsentSettingsButton label="Open cookie settings" />
       </p>
       <p>
-        <strong>Progress in the guide (diywithai.cekask.in).</strong> So you can continue the guide
-        later, the website stores your start answers (which computer, which AI, whether it&apos;s
-        installed, whether you have a domain) and which steps you have completed. This is necessary
+        <strong>Progress in the guides (diywithai.cekask.in).</strong> So you can continue a guide
+        later, the website stores your start answers for each guide (e.g. which computer, which AI,
+        whether it&apos;s installed, whether you have a domain, what your website is built with) and
+        which steps you have completed. The Google guide reuses your answers from the website guide
+        so you don&apos;t have to enter them twice. This is necessary
         for the function you are using (§ 25(2) no. 2 TDDDG). The legal basis is Art. 6(1)(f) GDPR.
         You can delete this information at any time with “Start over” in the guide. You don&apos;t
         enter any details about your business on this website; prompts are only copied to your
@@ -218,7 +220,7 @@ export function DatenschutzText() {
       <p>
         The guides at diywithai.cekask.in explain how to get tasks done with your own AI (for
         example Claude Code by Anthropic or Codex by OpenAI), such as building a website, and how to
-        use accounts with services such as GitHub, Cloudflare or a domain provider for it. This website does not connect to any
+        use accounts with services such as GitHub, Cloudflare, Google (Search Console, Business Profile) or a domain provider for it. This website does not connect to any
         of these services and receives no data from them. Whatever you enter into your AI and
         whichever accounts you create are processed by the respective providers under their own
         responsibility and privacy policies. I have no access to these accounts.
