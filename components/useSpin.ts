@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { MottoId } from "@/content/types";
-import { MOTTOS, spinMotto } from "@/lib/motto";
+import { MOTTOS, drawMotto, spinMotto } from "@/lib/motto";
+import { useComputer } from "./office/ComputerContext";
 
 /**
  * The slot-machine roll shared by the header button and the big button on
@@ -13,6 +14,7 @@ export function useSpin(names: Record<MottoId, string>, announce: string) {
   const [rolling, setRolling] = useState<MottoId | null>(null);
   const [announced, setAnnounced] = useState("");
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const computer = useComputer();
 
   useEffect(
     () => () => {
@@ -22,10 +24,11 @@ export function useSpin(names: Record<MottoId, string>, announce: string) {
   );
 
   const land = () => {
-    const next = spinMotto();
+    const next = computer ? drawMotto(null) : spinMotto();
     setRolling(null);
     setAnnounced(`${announce} ${names[next]}`);
-    window.scrollTo({ top: 0 });
+    if (computer) computer.open(next);
+    else window.scrollTo({ top: 0 });
   };
 
   const spin = () => {

@@ -99,7 +99,7 @@ export function AdBreak({ open, onDone, onAbort, faces, video, email, text }: Pr
         <div className={styles.stage}>
           <div className={styles.rays} aria-hidden="true" />
           <Image
-            key={slide % faceList.length}
+            key={`face-${slide % faceList.length}`}
             src={faceList[slide % faceList.length]}
             alt=""
             width={300}
@@ -107,7 +107,7 @@ export function AdBreak({ open, onDone, onAbort, faces, video, email, text }: Pr
             unoptimized
             className={styles.face}
           />
-          <p key={slide} className={styles.slogan}>
+          <p key={`line-${slide}`} className={styles.slogan}>
             {line}
           </p>
           <p className={styles.burst} aria-hidden="true">

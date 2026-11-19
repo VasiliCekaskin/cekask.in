@@ -269,8 +269,6 @@ export type AiText = {
   suggestions: string[];
   thinking: string;
   disclaimer: string;
-  /** The reply shown on the overview's preview card. */
-  previewReply: string;
   /** Under every answer, above the contact card. */
   contactIntro: string;
   mailButton: string;
@@ -280,6 +278,49 @@ export type AiText = {
    */
   rules: { words: string[]; replies: string[] }[];
   fallback: string[];
+};
+
+export type GameText = {
+  /** Start screen */
+  place: string;
+  enter: string;
+  controlsKeys: string;
+  controlsTouch: string;
+  /** Opens the computer without playing (keyboard, screen readers, no WebGL). */
+  skip: string;
+  loading: string;
+  paused: string;
+  resume: string;
+  /** "Press E" / "Tap" prompts per object, e.g. "Computer benutzen". */
+  use: string;
+  prompts: { computer: string; coffee: string; door: string; whiteboard: string; portrait: string; plant: string };
+  /** Short messages shown when using the small objects; one is picked at random. */
+  coffee: string[];
+  whiteboard: string[];
+  portrait: string[];
+  plant: string[];
+  door: string;
+  /** Lines drawn on the in-game whiteboard and name plate. */
+  board: string[];
+  plate: string;
+  /** The in-game computer */
+  os: string;
+  screenHint: string;
+  close: string;
+  statsTitle: string;
+  skillsTitle: string;
+  mottosTitle: string;
+  mottosHint: string;
+  contact: string;
+  exit: string;
+  /** App window: back to the app grid, open the motto as a normal page. */
+  apps: string;
+  openPage: string;
+  whackBlurb: string;
+  /** Phones: the game is played in landscape. */
+  rotate: string;
+  rotateHint: string;
+  pause: string;
 };
 
 export type RecipeText = {
@@ -389,20 +430,18 @@ export type MottosText = {
   recommend: { label: string; hint: string };
   names: Record<MottoId, string>;
   /** The home page overview: introduction plus a preview card per motto. */
+  /** Roll button and the header's "back to overview" button. */
   overview: {
-    eyebrow: string;
     /** Big call to action: roll a random motto. */
     roll: string;
     rollHint: string;
-    gridTitle: string;
-    gridSub: string;
-    /** Label on each preview card, e.g. "Open". */
-    open: string;
     /** Header button back to the overview. */
     all: string;
   };
-  /** One line per motto for its preview card. */
+  /** One line per motto, shown on its app in the in-game computer. */
   blurbs: Record<MottoId, string>;
+  /** The home page game: walk through Vasili's office, use the computer. */
+  game: GameText;
   pro: ProText;
   terminal: TerminalText;
   paper: PaperText;

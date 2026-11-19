@@ -39,13 +39,19 @@ export function useMotto(): MottoId | null {
  * comes up once before any repeats.
  */
 export function spinMotto(): MottoId {
-  if (bag.length === 0) {
-    bag = MOTTOS.filter((m) => m !== current).sort(() => Math.random() - 0.5);
-  }
-  let next = bag.shift()!;
-  if (next === current && bag.length) next = bag.shift()!;
+  const next = drawMotto(current);
   current = next;
   emit();
+  return next;
+}
+
+/** Draws the next motto from the shuffled bag without switching to it. */
+export function drawMotto(not: MottoId | null): MottoId {
+  if (bag.length === 0) {
+    bag = MOTTOS.filter((m) => m !== not).sort(() => Math.random() - 0.5);
+  }
+  let next = bag.shift()!;
+  if (next === not && bag.length) next = bag.shift()!;
   return next;
 }
 
