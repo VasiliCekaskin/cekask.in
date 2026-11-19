@@ -7,7 +7,7 @@ import { OfficeGame } from "@/components/office/OfficeGame";
 import { OpenApp } from "@/components/office/OpenApp";
 import { WhackGame } from "@/components/WhackGame";
 import { RollButton } from "@/components/RollButton";
-import { getContent, profile } from "@/content";
+import { DIY_URL, getContent, profile } from "@/content";
 import type { MottoId } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 import { MOTTOS, RECOMMENDED } from "@/lib/motto-ids";
@@ -35,7 +35,7 @@ const APP_LOOK: Record<MottoId, { icon: string; color: string }> = {
  * introduction and every motto are in the page even before the game loads.
  */
 export function Overview({ locale }: { locale: Locale }) {
-  const { site, facts, contact, mottos, fun } = getContent(locale);
+  const { site, facts, contact, mottos, fun, ui } = getContent(locale);
   const t = mottos.game;
   const mailto = mailHref(contact.mailSubject);
   const rpg = mottos.rpg;
@@ -132,6 +132,19 @@ export function Overview({ locale }: { locale: Locale }) {
               <span className={styles.appName}>{fun.game.title}</span>
               <span className={styles.appBlurb}>{t.whackBlurb}</span>
             </OpenApp>
+          </li>
+          <li>
+            <a href={`${DIY_URL}/${locale}`} target="_blank" rel="noopener" className={styles.app}>
+              <span className={styles.icon} style={{ background: "#2f5bea" }} aria-hidden="true">
+                🛠️
+              </span>
+              <span className={styles.appName}>
+                {ui.footer.diy}
+                <span aria-hidden="true"> ↗</span>
+              </span>
+              <span className={styles.appBlurb}>{t.diyBlurb}</span>
+              <span className="visually-hidden">{ui.newTab}</span>
+            </a>
           </li>
         </ul>
         <div className={styles.roll}>

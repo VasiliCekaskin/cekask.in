@@ -118,6 +118,29 @@ export type UiText = {
     legalLabel: string;
     impressum: string;
     datenschutz: string;
+    /** Reopens the cookie settings. */
+    consentSettings: string;
+    /** Link to the DIY with AI guides on the subdomain. */
+    diy: string;
+  };
+  /** Header link to the DIY with AI guides (full label, and the short one on phones). */
+  diyNav: { label: string; short: string };
+  /** Cookie banner and settings dialog (components/ConsentBanner.tsx). */
+  consent: {
+    label: string;
+    title: string;
+    text: string;
+    accept: string;
+    reject: string;
+    settings: string;
+    settingsTitle: string;
+    settingsText: string;
+    necessary: { name: string; text: string; always: string };
+    storage: { name: string; text: string };
+    save: string;
+    close: string;
+    privacy: string;
+    imprint: string;
   };
   legal: {
     impressumTitle: string;
@@ -367,6 +390,8 @@ export type GameText = {
   apps: string;
   openPage: string;
   whackBlurb: string;
+  /** The DIY with AI app on the in-game computer (opens the subdomain). */
+  diyBlurb: string;
   /** Phones: the game is played in landscape. */
   rotate: string;
   rotateHint: string;
@@ -530,5 +555,10 @@ export type LegalConfig = {
     privacyPolicyUrl: string | null;
   };
   supervisoryAuthority: { name: string; url: string };
+  /**
+   * Every website these legal pages cover. The subdomains link here for
+   * their imprint and privacy policy instead of having their own.
+   */
+  sites: { domain: string; name: string; url: string }[];
   lastUpdated: string | null;
 };

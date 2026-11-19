@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { confetti } from "@/lib/confetti";
 import { AdBreak } from "./AdBreak";
 import styles from "./WhackGame.module.css";
+import { hasStorageConsent } from "@/lib/consent";
 
 type GameText = {
   label: string;
@@ -43,11 +44,15 @@ const HOLES = 9;
 const ROUND_SECONDS = 20;
 const BEST_KEY = "whack-a-vasili-best";
 
+// Without consent (cookie banner) the best score only lives in memory.
+let memoryBest = 0;
+
 function readBest() {
+  if (!hasStorageConsent()) return memoryBest;
   try {
-    return Number(localStorage.getItem(BEST_KEY)) || 0;
+    return Math.max(memoryBest, Number(localStorage.getItem(BEST_KEY)) || 0);
   } catch {
-    return 0;
+    return memoryBest;
   }
 }
 
@@ -59,8 +64,9 @@ function subscribeBest(listener: () => void) {
 }
 
 function saveBest(score: number) {
+  memoryBest = Math.max(memoryBest, score);
   try {
-    localStorage.setItem(BEST_KEY, String(score));
+    if (hasStorageConsent()) localStorage.setItem(BEST_KEY, String(memoryBest));
   } catch {
     // Private mode or blocked storage: the best score just isn't remembered.
   }

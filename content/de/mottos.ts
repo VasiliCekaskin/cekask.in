@@ -164,6 +164,7 @@ export const mottos: MottosText = {
     rotateHint: "Das Büro ist breiter als Ihr Handy hoch.",
     pause: "Pause",
     whackBlurb: "Das Minispiel: 20 Sekunden, so oft wie möglich auf mein Gesicht tippen.",
+    diyBlurb: "Mein Projekt: kinderleichte Anleitungen, mit denen Ihre KI echte Aufgaben erledigt, zum Beispiel eine Website.",
   },
 
   pro: {
@@ -217,6 +218,11 @@ export const mottos: MottosText = {
         name: "TrackDemos",
         url: "https://trackdemos.com",
         text: "Private Demo-Plattform für Musiker: Songs hochladen, gezielt mit Freunden teilen, über Kommentare und Versionen zusammenarbeiten. Web-App, Mobile-App, Abos über RevenueCat.",
+      },
+      {
+        name: "DIY with AI",
+        url: "https://diywithai.cekask.in/de",
+        text: "Eine wachsende Sammlung kinderleichter Anleitungen für Menschen ohne Technik-Erfahrung: Mit fertigen Prompts erledigt die eigene KI echte Aufgaben für Privatleute und kleine Unternehmen. Die erste Anleitung bringt eine eigene Website online, fast ohne Kosten. Weitere folgen. Next.js, Deutsch und Englisch.",
       },
     ],
     sideTitle: "Nebenberufliche Leistungen (Einzelunternehmen)",

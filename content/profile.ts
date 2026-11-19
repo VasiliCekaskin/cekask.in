@@ -7,6 +7,9 @@ import type { Profile } from "./types";
  * Anything marked TODO is a fact that still needs to be confirmed or filled
  * in. A `null` URL hides that link everywhere on the site.
  */
+/** DIY with AI: the step-by-step AI guides on the subdomain. Its imprint and privacy policy are the ones on this site. */
+export const DIY_URL = "https://diywithai.cekask.in";
+
 export const profile: Profile = {
   name: "Vasili Cekaskin",
   url: "https://cekask.in",

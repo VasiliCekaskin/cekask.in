@@ -9,6 +9,7 @@ import { setMotto } from "@/lib/motto";
 import { ComputerContext, type AppId } from "./ComputerContext";
 import type { Interactable, OfficeApi, OfficeTexts } from "./office";
 import styles from "./OfficeGame.module.css";
+import { hasStorageConsent } from "@/lib/consent";
 
 const COARSE = "(pointer: coarse)";
 const PORTRAIT = "(orientation: portrait)";
@@ -39,7 +40,7 @@ type Phase = "loading" | "intro" | "play" | "paused" | "computer" | "door" | "ta
 const EGGS_KEY = "office-eggs";
 
 function readEggs(): OfficeEgg[] {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined" || !hasStorageConsent()) return [];
   try {
     return JSON.parse(localStorage.getItem(EGGS_KEY) ?? "[]");
   } catch {
@@ -137,8 +138,9 @@ export function OfficeGame({ text, locale, screen, portraitSrc, mailto, contactL
       const next = [...new Set([...readEggs(), ...eggsRef.current, egg])];
       eggsRef.current = next;
       setEggs(next);
+      // Saved only with consent (cookie banner); otherwise kept for this visit.
       try {
-        localStorage.setItem(EGGS_KEY, JSON.stringify(next));
+        if (hasStorageConsent()) localStorage.setItem(EGGS_KEY, JSON.stringify(next));
       } catch {}
       sounds.found();
       show(line, text.eggFound.replace("{n}", String(next.length)).replace("{total}", String(totalEggs)));

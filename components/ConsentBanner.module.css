@@ -1,0 +1,242 @@
+/* Cookie banner: a calm card in the corner. It never covers the whole page. */
+.banner {
+  position: fixed;
+  z-index: 1000;
+  inset: auto 1rem 1rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 40rem;
+  margin-inline: auto;
+  padding: 1.25rem;
+  border: 1px solid #cdd1c8;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #1b1e19;
+  box-shadow: 0 18px 50px rgba(20, 24, 18, 0.22);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+@media (min-width: 48rem) {
+  .banner {
+    inset: auto 1.5rem 1.5rem auto;
+  }
+}
+
+.body {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.text {
+  margin: 0;
+  color: #474d44;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.links a {
+  color: #33473a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Accept and Decline look exactly the same: equal weight is a legal requirement. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice,
+.more {
+  flex: 1 1 8rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.choice {
+  border: 1px solid #33473a;
+  background: #33473a;
+  color: #f6f4ef;
+}
+
+.choice:hover {
+  background: #283a2e;
+}
+
+.more {
+  border: 1px solid #cdd1c8;
+  background: transparent;
+  color: #1b1e19;
+}
+
+.more:hover {
+  border-color: #626a5e;
+}
+
+.choice:focus-visible,
+.more:focus-visible,
+.close:focus-visible,
+.switch:focus-visible,
+.link:focus-visible {
+  outline: 3px solid #4e6e58;
+  outline-offset: 2px;
+}
+
+.dialog {
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: 1px solid #cdd1c8;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #1b1e19;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.dialog::backdrop {
+  background: rgba(20, 24, 18, 0.45);
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.dialogHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.close {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: #f4f5f2;
+  color: #1b1e19;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e6e8e2;
+  border-radius: 12px;
+  background: #f9faf7;
+}
+
+label.option {
+  cursor: pointer;
+}
+
+.option p {
+  margin: 0;
+}
+
+.optionName {
+  display: block;
+  font-weight: 700;
+}
+
+.optionText {
+  display: block;
+  margin-top: 0.15rem;
+  color: #626a5e;
+}
+
+.always {
+  flex: none;
+  font-weight: 650;
+  color: #24563a;
+}
+
+.switch {
+  flex: none;
+  appearance: none;
+  position: relative;
+  width: 2.75rem;
+  height: 1.6rem;
+  margin: 0.1rem 0 0;
+  border-radius: 999px;
+  background: #cdd1c8;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.switch:checked {
+  background: #3d8b5a;
+}
+
+.switch:checked::after {
+  transform: translateX(1.15rem);
+}
+
+/* Looks like the other footer links. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .switch::after {
+    transition: none;
+  }
+}

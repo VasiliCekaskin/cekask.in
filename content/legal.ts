@@ -36,5 +36,11 @@ export const legal: LegalConfig = {
     url: "https://www.ldi.nrw.de",
   },
 
-  lastUpdated: "04.11.2026",
+  // Both sites are hosted on Vercel (checked via response headers, 19.11.2026).
+  sites: [
+    { domain: "cekask.in", name: "Portfolio Vasili Cekaskin", url: "https://cekask.in" },
+    { domain: "diywithai.cekask.in", name: "DIY with AI", url: "https://diywithai.cekask.in" },
+  ],
+
+  lastUpdated: "19.11.2026",
 };

@@ -82,6 +82,41 @@
   background: var(--line);
 }
 
+/* Link to the DIY with AI guides on the subdomain. */
+.diy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.8rem;
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.diy:hover {
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.diyShort {
+  display: none;
+}
+
+@media (max-width: 56rem) {
+  .diyLong {
+    display: none;
+  }
+
+  .diyShort {
+    display: inline;
+  }
+}
+
 /* Phones: logo plus name only, tools shrink to icons. */
 @media (max-width: 40rem) {
   .role {
@@ -94,6 +129,10 @@
 
   .divider {
     display: none;
+  }
+
+  .diy {
+    padding-inline: 0.6rem;
   }
 }
 

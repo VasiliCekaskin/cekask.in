@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { KonamiParty } from "@/components/KonamiParty";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -58,6 +59,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <main id="main">{children}</main>
         <SiteFooter locale={locale} />
         <KonamiParty />
+        <ConsentBanner locale={locale} text={ui.consent} />
       </body>
     </html>
   );

@@ -164,6 +164,7 @@ export const mottos: MottosText = {
     rotateHint: "The office is wider than your phone is tall.",
     pause: "Pause",
     whackBlurb: "The mini game: 20 seconds, tap my face as often as you can.",
+    diyBlurb: "My project: dead-simple guides that get your AI to do real tasks, like building a website.",
   },
 
   pro: {
@@ -219,6 +220,11 @@ export const mottos: MottosText = {
         name: "TrackDemos",
         url: "https://trackdemos.com",
         text: "Private demo sharing for musicians: upload songs, share them with friends at controlled visibility, collaborate through comments and versions. Web app, mobile app, subscriptions via RevenueCat.",
+      },
+      {
+        name: "DIY with AI",
+        url: "https://diywithai.cekask.in/en",
+        text: "A growing collection of dead-simple guides for people with no tech background: with ready-made prompts, their own AI handles real tasks for individuals and small businesses. The first guide puts your own website online at almost no cost; more are on the way. Next.js, German and English.",
       },
     ],
     sideTitle: "Freelance services (sole proprietorship)",

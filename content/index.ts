@@ -10,5 +10,5 @@ export function getContent(locale: Locale): Content {
   return contentByLocale[locale];
 }
 
-export { profile } from "./profile";
+export { DIY_URL, profile } from "./profile";
 export { legal } from "./legal";

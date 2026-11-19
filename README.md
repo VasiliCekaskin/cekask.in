@@ -1,7 +1,7 @@
 # cekask.in
 
 Personal portfolio of Vasili Cekaskin. Next.js 16 (App Router), TypeScript,
-plain CSS Modules. Fully static, with no database, no tracking, and fonts
+plain CSS Modules. Fully static, with no database, no tracking, no cookies, and fonts
 served from the site itself. Loud, colorful and playable on purpose.
 
 ## Run
@@ -108,6 +108,26 @@ How it fits together:
   per language at build time, using static font copies in `assets/og-fonts`.
 - Fonts live in `app/fonts` (SIL Open Font License) and load with
   `next/font/local`, so no font provider is contacted.
+
+## Cookie banner
+
+`components/ConsentBanner.tsx` + `lib/consent.ts`. The site sets no cookies;
+the only optional storage is game progress in `localStorage`
+(`whack-a-vasili-best`, `office-eggs`), written only after consent and deleted
+when consent is withdrawn. Decline and Accept look the same, nothing is
+pre-ticked, the banner never blocks the page, and "Cookie settings" in the
+footer (and on the privacy page) reopens the choice. Anything new that stores
+data on the device must go through `hasStorageConsent()` and be listed in
+`OPTIONAL_KEYS` and the privacy policy.
+
+## DIY with AI
+
+The guides at https://diywithai.cekask.in are linked from the header, the
+footer, the in-game computer and the CV's projects (`DIY_URL` in
+`content/profile.ts`). That site has no legal pages of its own: its footer
+links to this site's Impressum and Datenschutz, which cover both domains
+(`legal.sites` in `content/legal.ts`). Update them when DIY with AI starts
+processing anything new.
 
 ## Legal pages
 
