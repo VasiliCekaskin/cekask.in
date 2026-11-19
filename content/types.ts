@@ -199,7 +199,8 @@ export type MottoId =
   | "wanted"
   | "chat"
   | "recipe"
-  | "boarding";
+  | "boarding"
+  | "ai";
 
 /** The recommended motto: big, shiny, only the essentials. */
 export type ClarityText = {
@@ -251,6 +252,34 @@ export type ChatText = {
   /** Quick replies; the answer to "offers", "charity" and "contact" is built from shared content. */
   questions: { id: "about" | "skills" | "offers" | "charity" | "contact" | "hire"; q: string; a: string[] }[];
   repliesLabel: string;
+};
+
+/** "AI assistant": a chatbot that agrees, enthusiastically, that you should hire Vasili. */
+export type AiText = {
+  /** Assistant name, shown in the top bar and next to answers. */
+  bot: string;
+  /** Fake model picker label, e.g. "Vasili 7.0". */
+  model: string;
+  modelNote: string;
+  newChat: string;
+  greeting: string;
+  placeholder: string;
+  inputLabel: string;
+  send: string;
+  suggestions: string[];
+  thinking: string;
+  disclaimer: string;
+  /** The reply shown on the overview's preview card. */
+  previewReply: string;
+  /** Under every answer, above the contact card. */
+  contactIntro: string;
+  mailButton: string;
+  /**
+   * Keyword rules, checked in order; the first rule with a word contained in
+   * the (lower-cased) question wins and one of its replies is picked at random.
+   */
+  rules: { words: string[]; replies: string[] }[];
+  fallback: string[];
 };
 
 export type RecipeText = {
@@ -384,6 +413,7 @@ export type MottosText = {
   chat: ChatText;
   recipe: RecipeText;
   boarding: BoardingText;
+  ai: AiText;
 };
 
 /** Everything a page needs in one language. Both locales must match it. */

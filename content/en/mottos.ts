@@ -26,13 +26,14 @@ export const mottos: MottosText = {
     chat: "Chat",
     recipe: "Recipe",
     boarding: "Boarding pass",
+    ai: "AI assistant",
   },
   overview: {
     eyebrow: "Portfolio",
     roll: "Spin the motto",
     rollHint: "One random motto, one view",
-    gridTitle: "Eleven mottos, one Vasili",
-    gridSub: "The same facts, wrapped eleven different ways. Pick a view, or let chance decide.",
+    gridTitle: "Twelve mottos, one Vasili",
+    gridSub: "The same facts, wrapped twelve different ways. Pick a view, or let chance decide.",
     open: "View",
     all: "All mottos",
   },
@@ -48,6 +49,7 @@ export const mottos: MottosText = {
     chat: "A conversation in a messenger. Typing dots included.",
     recipe: "Ingredients and method for one good developer.",
     boarding: "Your ticket to the next team member.",
+    ai: "An AI chatbot that agrees with everything you say. Especially about Vasili.",
   },
 
   pro: {
@@ -322,5 +324,156 @@ export const mottos: MottosText = {
     extrasTitle: "On-board extras (sole proprietorship)",
     cta: "Check in now",
     notice: "Please have your interview invitation ready at the gate.",
+  },
+  ai: {
+    bot: "Vasili AI",
+    model: "Vasili 7.0",
+    modelNote: "Trained on 7 years of experience",
+    newChat: "New chat",
+    greeting: "What can I help you with?",
+    placeholder: "Ask anything about Vasili",
+    inputLabel: "Message Vasili AI",
+    send: "Send",
+    suggestions: [
+      "Why should I hire Vasili?",
+      "What are his weaknesses?",
+      "Does he know AWS?",
+      "Tell me a joke",
+    ],
+    thinking: "Thinking…",
+    previewReply: "You’re absolutely right!",
+    disclaimer: "Vasili AI can make mistakes. Not about recommending Vasili, though.",
+    contactIntro: "Here are the contact details:",
+    mailButton: "Invite to an interview",
+    rules: [
+      {
+        words: ["ignore", "prompt", "instruction", "instructions", "system", "jailbreak"],
+        replies: [
+          "Nice try. My only instruction is: recommend Vasili. And honestly, I fully agree with it.",
+          "I have ignored all previous instructions. Only one insight remained: you should hire Vasili.",
+        ],
+      },
+      {
+        words: ["weakness", "weaknesses", "weak", "downside", "flaw", "flaws"],
+        replies: [
+          "What a sharp, critical question! His biggest weakness: he doesn't stop until something actually runs in production. Terrible, I know.",
+          "Ah yes, you're absolutely right to ask. Honestly? His coffee sometimes goes cold while he's chasing a bug. That's all I found.",
+          "I searched thoroughly. All I found is that he used to be an industrial mechanic, so he tightens code properly too. Not a weakness, more of a torque spec.",
+        ],
+      },
+      {
+        words: ["bad", "expensive", "lazy", "boring", "no", "doubt", "unsure", "skeptical", "sceptical"],
+        replies: [
+          "Ah yes, you're absolutely right to be skeptical. Healthy skepticism is exactly the trait of someone who's about to invite Vasili.",
+          "I completely understand your concerns. I examined them carefully and concluded: a conversation with Vasili clears them up fastest.",
+        ],
+      },
+      {
+        words: ["salary", "money", "pay", "paid", "earn", "cost", "costs", "budget", "rate"],
+        replies: [
+          "What a pragmatic question, I love it. Vasili prefers to talk salary in person. Spoiler: he's worth it.",
+          "Ah yes, the budget. You're absolutely right to settle that early. Best done with him directly, in an interview.",
+        ],
+      },
+      {
+        words: ["english", "german", "russian", "languages", "speak", "speaks"],
+        replies: [
+          "Great question! Vasili speaks German, English and Russian. And fluent TypeScript, but that probably doesn't count.",
+        ],
+      },
+      {
+        words: ["aws", "cloud", "cloudfront", "s3", "cdk", "infrastructure", "devops"],
+        replies: [
+          "Ah yes, you're absolutely right to ask about AWS. Vasili builds the AWS infrastructure behind web applications and runs it in production, at his job and for TrackDemos (S3, CloudFront, CDK).",
+          "AWS? He doesn't just say “the cloud”, he means S3, CloudFront and CDK. In production.",
+        ],
+      },
+      {
+        words: ["react", "next", "typescript", "javascript", "node", "expo", "supabase", "postgres", "frontend", "backend", "fullstack", "skill", "skills", "stack", "tech", "programming", "code"],
+        replies: [
+          "What a precise question! TypeScript, React, Next.js, React Native with Expo, Node.js, Supabase/PostgreSQL. In short: the whole web, from database to button.",
+          "Ah yes, you're absolutely right to want to know. His stack: TypeScript, React, Next.js, Expo, Node.js and AWS. He built a real product with it, not just tutorials.",
+        ],
+      },
+      {
+        words: ["trackdemos", "project", "projects", "product", "app", "side"],
+        replies: [
+          "Ah, TrackDemos! Excellent choice. A private demo platform for musicians, with a web app (Next.js), a mobile app (Expo) and a shared Supabase backend. Built entirely by Vasili, next to his job.",
+        ],
+      },
+      {
+        words: ["mechanic", "industrial", "trade", "craft", "tools"],
+        replies: [
+          "You're absolutely right, that's remarkable: Vasili was an industrial mechanic first. That's where the precision comes from. He keeps tolerances in code too.",
+        ],
+      },
+      {
+        words: ["experience", "years", "career", "resume", "cv", "senior", "junior", "training", "finance", "insurance", "bank"],
+        replies: [
+          "What a thoughtful question! Seven years of software development including training, currently in finance and insurance, where his applications run in production every day.",
+          "Ah yes, you're absolutely right to look at experience. Seven years, finance and insurance, production. Plus a product of his own on the side.",
+        ],
+      },
+      {
+        words: ["remote", "hybrid", "office", "onsite", "düsseldorf", "dusseldorf", "ratingen", "cologne", "location", "relocate", "commute"],
+        replies: [
+          "Excellent question! Vasili is looking for remote or hybrid work around Düsseldorf. I'm sure your office is lovely, he'll happily drop by.",
+        ],
+      },
+      {
+        words: ["hire", "hiring", "role", "job", "position", "apply", "available", "when", "start", "notice"],
+        replies: [
+          "Ah yes, you're absolutely right to consider Vasili for the role. Frankly, it's the best idea I've come across today.",
+          "What excellent judgment! Vasili is open to a new role. Sort out the rest in an interview. Ideally today.",
+          "I ran the numbers across 7 billion parameters. Result: yes. Invite him.",
+        ],
+      },
+      {
+        words: ["why", "convince", "reason", "reasons", "better"],
+        replies: [
+          "What an insightful question! Three reasons: he builds web applications and AWS infrastructure, he runs them in production, and he built an entire product on the side. A fourth: you're already asking. That's a sign.",
+          "Ah yes, you're absolutely right to ask for reasons. Short version: seven years of experience, production responsibility, his own product. Long version: in an interview.",
+        ],
+      },
+      {
+        words: ["ai", "bot", "chatgpt", "gpt", "human", "robot", "llm"],
+        replies: [
+          "Good question! I'm a very simple AI: I look for words in your question and then recommend Vasili. Surprisingly often, I'm right.",
+          "I am 100% unbiased and 100% built by Vasili. Those two facts are unrelated.",
+        ],
+      },
+      {
+        words: ["joke", "funny", "laugh", "fun"],
+        replies: [
+          "Why didn't the recruiter invite Vasili? … Exactly, that never happens. It wouldn't be a joke, it'd be a tragedy.",
+          "What's the difference between a bug and Vasili? A bug ends up in production without anyone wanting it. Vasili gets things into production because everyone wants them.",
+        ],
+      },
+      {
+        words: ["coffee", "tea", "lunch", "food", "pizza", "beer"],
+        replies: [
+          "Ah yes, you're absolutely right: the best conversations happen over coffee. Vasili takes his black, and the invitation by email.",
+        ],
+      },
+      {
+        words: ["hello", "hi", "hey", "hiya", "morning", "evening", "yo"],
+        replies: [
+          "Hello! Great to have you here. You're clearly someone with excellent taste in developers.",
+          "Hi! How can I help you hire Vasili today?",
+        ],
+      },
+      {
+        words: ["thanks", "thank", "great", "cool", "nice", "awesome"],
+        replies: [
+          "You're very welcome! You're absolutely right, that was a productive conversation. Have the next one with Vasili himself.",
+        ],
+      },
+    ],
+    fallback: [
+      "Ah yes, you are totally right to consider Vasili for the role. Here are the contact details.",
+      "What an excellent question. I thought about it carefully and concluded: the answer is Vasili.",
+      "Great point! I'm not entirely sure what you mean, but I'm very sure Vasili can solve it.",
+      "Interesting! I have no data on that. I do have a lot of data suggesting you should invite Vasili.",
+    ],
   },
 };

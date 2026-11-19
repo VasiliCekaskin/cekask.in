@@ -13,5 +13,6 @@ export const MOTTOS: MottoId[] = [
   "chat",
   "recipe",
   "boarding",
+  "ai",
 ];
 export const RECOMMENDED: MottoId = "clarity";

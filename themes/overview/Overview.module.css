@@ -298,6 +298,12 @@
     repeating-linear-gradient(90deg, rgb(200 60 50 / 0.18) 0 12px, transparent 12px 24px);
 }
 
+.preview[data-preview="ai"] {
+  --p-bg: #ffffff;
+  --p-ink: #0d0d0d;
+  --p-accent: #f2f2f2;
+}
+
 .preview[data-preview="boarding"] {
   --p-bg: #0f3b6e;
   --p-surface: #fff;
@@ -498,6 +504,37 @@
   border-radius: 14px 14px 4px 14px;
   background: var(--p-accent);
   color: #fff;
+}
+
+.pvBubble[data-ai] {
+  color: var(--p-ink);
+}
+
+.pvAi {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-self: start;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.pvAiDot {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 50%;
+  font-size: 0.65rem;
+}
+
+.pvPrompt {
+  width: 100%;
+  height: 1.5rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 999px;
+  box-shadow: 0 3px 10px -5px rgb(0 0 0 / 0.2);
 }
 
 .pvDots {

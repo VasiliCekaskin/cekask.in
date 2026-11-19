@@ -315,6 +315,31 @@
 }
 
 /* ---- Chat: a messenger app ---- */
+/* ---- AI assistant: a plain, quiet chatbot app ---- */
+:root[data-motto="ai"] {
+  --bg: #ffffff;
+  --bg-pattern: none;
+  --surface: #ffffff;
+  --surface-sunk: #f2f2f2;
+  --ink: #0d0d0d;
+  --ink-2: #3d3d3d;
+  --ink-3: #6e6e6e;
+  --line: #e3e3e3;
+  --line-strong: #c4c4c4;
+  --accent: #0d0d0d;
+  --accent-ink: #ffffff;
+  --button: #0d0d0d;
+  --button-hover: #333333;
+  --pop-1: #0d0d0d;
+  --pop-2: #f2f2f2;
+  --on-pop: #ffffff;
+  --radius: 16px;
+  --font-heading: var(--font-sans);
+  --heading-weight: 600;
+  --heading-tracking: -0.02em;
+  color-scheme: light;
+}
+
 :root[data-motto="chat"] {
   --bg: #dfe9f3;
   --bg-pattern: none;

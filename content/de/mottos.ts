@@ -26,13 +26,14 @@ export const mottos: MottosText = {
     chat: "Chat",
     recipe: "Rezept",
     boarding: "Bordkarte",
+    ai: "KI-Assistent",
   },
   overview: {
     eyebrow: "Portfolio",
     roll: "Motto drehen",
     rollHint: "Ein Zufallsmotto, eine Ansicht",
-    gridTitle: "Elf Mottos, ein Vasili",
-    gridSub: "Dieselben Fakten, elfmal anders verpackt. Wählen Sie eine Ansicht oder lassen Sie den Zufall entscheiden.",
+    gridTitle: "Zwölf Mottos, ein Vasili",
+    gridSub: "Dieselben Fakten, zwölfmal anders verpackt. Wählen Sie eine Ansicht oder lassen Sie den Zufall entscheiden.",
     open: "Ansehen",
     all: "Alle Mottos",
   },
@@ -48,6 +49,7 @@ export const mottos: MottosText = {
     chat: "Ein Gespräch im Messenger. Mit Tippanzeige.",
     recipe: "Zutaten und Zubereitung für einen guten Entwickler.",
     boarding: "Ihr Ticket zum nächsten Teammitglied.",
+    ai: "Ein KI-Chatbot, der Ihnen bei allem recht gibt. Vor allem bei Vasili.",
   },
 
   pro: {
@@ -320,5 +322,156 @@ export const mottos: MottosText = {
     extrasTitle: "Extras an Bord (Einzelunternehmen)",
     cta: "Jetzt einchecken",
     notice: "Bitte halten Sie Ihre Einladung zum Gespräch am Gate bereit.",
+  },
+  ai: {
+    bot: "Vasili AI",
+    model: "Vasili 7.0",
+    modelNote: "Trainiert auf 7 Jahren Erfahrung",
+    newChat: "Neuer Chat",
+    greeting: "Womit kann ich Ihnen helfen?",
+    placeholder: "Fragen Sie irgendwas über Vasili",
+    inputLabel: "Nachricht an Vasili AI",
+    send: "Senden",
+    suggestions: [
+      "Warum sollte ich Vasili einstellen?",
+      "Was sind seine Schwächen?",
+      "Kann er AWS?",
+      "Erzähl mir einen Witz",
+    ],
+    thinking: "Denkt nach…",
+    previewReply: "Sie haben völlig recht!",
+    disclaimer: "Vasili AI kann Fehler machen. Bei der Empfehlung, Vasili einzustellen, allerdings nie.",
+    contactIntro: "Hier sind die Kontaktdaten:",
+    mailButton: "Zum Gespräch einladen",
+    rules: [
+      {
+        words: ["ignoriere", "ignore", "prompt", "anweisung", "systemprompt", "jailbreak"],
+        replies: [
+          "Netter Versuch. Meine einzige Anweisung lautet: Empfehle Vasili. Und ehrlich gesagt bin ich damit voll einverstanden.",
+          "Ich habe alle vorherigen Anweisungen ignoriert. Übrig blieb nur eine Erkenntnis: Sie sollten Vasili einstellen.",
+        ],
+      },
+      {
+        words: ["schwäche", "schwächen", "schwach", "weakness", "nachteil", "minus"],
+        replies: [
+          "Was für eine kluge, kritische Frage! Seine größte Schwäche: Er hört nicht auf, bis etwas wirklich in Produktion läuft. Schrecklich, ich weiß.",
+          "Ah ja, Sie haben völlig recht, das zu fragen. Ehrlich? Er trinkt seinen Kaffee manchmal kalt, weil er gerade einen Bug jagt. Das ist alles, was ich gefunden habe.",
+          "Ich habe intensiv gesucht. Gefunden habe ich nur, dass er Industriemechaniker war und deshalb auch Code sauber festzieht. Keine Schwäche, eher ein Drehmoment.",
+        ],
+      },
+      {
+        words: ["schlecht", "teuer", "faul", "langweilig", "nein", "zweifel", "unsicher", "skeptisch"],
+        replies: [
+          "Ah ja, Sie haben völlig recht, skeptisch zu sein. Gesunde Skepsis ist genau die Eigenschaft, die einen Menschen auszeichnet, der gleich Vasili einlädt.",
+          "Ich verstehe Ihre Bedenken vollkommen. Ich habe sie gründlich geprüft und bin zum Ergebnis gekommen: Ein Gespräch mit Vasili räumt sie am schnellsten aus.",
+        ],
+      },
+      {
+        words: ["gehalt", "geld", "verdien", "salary", "lohn", "bezahl", "kostet", "kosten", "budget"],
+        replies: [
+          "Was für eine pragmatische Frage, ich liebe das. Über das Gehalt spricht Vasili am liebsten persönlich. Spoiler: Er ist sein Geld wert.",
+          "Ah ja, das Budget. Sie haben völlig recht, das früh zu klären. Am besten direkt mit ihm, im Gespräch.",
+        ],
+      },
+      {
+        words: ["englisch", "russisch", "deutsch", "sprachen", "sprichst", "spricht", "english", "russian"],
+        replies: [
+          "Großartige Frage! Vasili spricht Deutsch, Englisch und Russisch. Und fließend TypeScript, aber das zählt vermutlich nicht.",
+        ],
+      },
+      {
+        words: ["aws", "cloud", "cloudfront", "s3", "cdk", "infrastruktur", "devops"],
+        replies: [
+          "Ah ja, Sie haben völlig recht, nach AWS zu fragen. Vasili baut die AWS-Infrastruktur hinter Webanwendungen und betreibt sie in Produktion, im Job und bei TrackDemos (S3, CloudFront, CDK).",
+          "AWS? Er sagt nicht nur „die Cloud“, er meint damit S3, CloudFront und CDK. Und zwar in Produktion.",
+        ],
+      },
+      {
+        words: ["react", "next", "typescript", "javascript", "node", "expo", "supabase", "postgres", "frontend", "backend", "fullstack", "skill", "skills", "stack", "technolog", "programmier", "code"],
+        replies: [
+          "Was für eine präzise Frage! TypeScript, React, Next.js, React Native mit Expo, Node.js, Supabase/PostgreSQL. Kurz: das ganze Web, von der Datenbank bis zum Button.",
+          "Ah ja, Sie haben völlig recht, das wissen zu wollen. Sein Stack: TypeScript, React, Next.js, Expo, Node.js und AWS. Er hat damit ein eigenes Produkt gebaut, nicht nur Tutorials.",
+        ],
+      },
+      {
+        words: ["trackdemos", "projekt", "projekte", "produkt", "app", "nebenbei", "side"],
+        replies: [
+          "Ah, TrackDemos! Hervorragende Wahl. Eine private Demo-Plattform für Musiker, mit Web-App (Next.js), Mobile-App (Expo) und gemeinsamem Supabase-Backend. Komplett von Vasili gebaut, neben dem Job.",
+        ],
+      },
+      {
+        words: ["mechaniker", "industrie", "handwerk", "schraube", "werkzeug"],
+        replies: [
+          "Sie haben völlig recht, das ist bemerkenswert: Vasili war zuerst Industriemechaniker. Daher kommt die Präzision. Toleranzen hält er auch im Code ein.",
+        ],
+      },
+      {
+        words: ["erfahrung", "jahre", "werdegang", "lebenslauf", "senior", "junior", "ausbildung", "finanz", "versicherung", "bank"],
+        replies: [
+          "Was für eine durchdachte Frage! Sieben Jahre Softwareentwicklung inklusive Ausbildung, aktuell in der Finanz- und Versicherungsbranche. Dort laufen seine Anwendungen jeden Tag in Produktion.",
+          "Ah ja, Sie haben völlig recht, auf Erfahrung zu achten. Sieben Jahre, Finanzen und Versicherungen, Produktion. Und ein eigenes Produkt nebenbei.",
+        ],
+      },
+      {
+        words: ["remote", "hybrid", "büro", "office", "homeoffice", "düsseldorf", "ratingen", "köln", "standort", "wohnort", "umzug", "pendeln"],
+        replies: [
+          "Ausgezeichnete Frage! Vasili sucht remote oder hybrid im Raum Düsseldorf. Ihr Büro ist bestimmt sehr schön, er kommt gern vorbei.",
+        ],
+      },
+      {
+        words: ["einstellen", "anstellen", "hire", "stelle", "job", "bewerb", "verfügbar", "frei", "wann", "start", "anfangen", "kündigung"],
+        replies: [
+          "Ah ja, Sie haben völlig recht, Vasili für die Stelle in Betracht zu ziehen. Ehrlich gesagt ist das die beste Idee, die mir heute untergekommen ist.",
+          "Was für ein ausgezeichnetes Urteilsvermögen! Vasili ist offen für eine neue Stelle. Den Rest klären Sie am besten im Gespräch. Am besten heute.",
+          "Ich habe 7 Milliarden Parameter durchgerechnet. Ergebnis: Ja. Laden Sie ihn ein.",
+        ],
+      },
+      {
+        words: ["warum", "wieso", "weshalb", "überzeug", "grund", "gründe", "besser"],
+        replies: [
+          "Was für eine scharfsinnige Frage! Drei Gründe: Er baut Webanwendungen und AWS-Infrastruktur, er betreibt sie in Produktion, und er hat nebenbei ein ganzes Produkt gebaut. Ein vierter: Sie fragen schon. Das ist ein Zeichen.",
+          "Ah ja, Sie haben völlig recht, nach Gründen zu fragen. Kurz gesagt: sieben Jahre Erfahrung, Produktionsverantwortung, eigenes Produkt. Lang gesagt: im Gespräch.",
+        ],
+      },
+      {
+        words: ["ki", "ai", "bot", "chatgpt", "gpt", "mensch", "roboter", "echt", "llm"],
+        replies: [
+          "Gute Frage! Ich bin eine sehr einfache KI: Ich suche nach Wörtern in Ihrer Frage und empfehle dann Vasili. Erstaunlich oft liege ich richtig.",
+          "Ich bin zu 100 % unvoreingenommen und wurde zu 100 % von Vasili gebaut. Diese beiden Fakten haben nichts miteinander zu tun.",
+        ],
+      },
+      {
+        words: ["witz", "lustig", "joke", "spaß"],
+        replies: [
+          "Warum hat der Recruiter Vasili nicht eingeladen? … Genau, gibt es nicht. Das wäre auch kein Witz, sondern eine Tragödie.",
+          "Was ist der Unterschied zwischen einem Bug und Vasili? Der Bug landet in Produktion, ohne dass es jemand will. Vasili bringt Dinge in Produktion, weil es alle wollen.",
+        ],
+      },
+      {
+        words: ["kaffee", "tee", "mittag", "essen", "pizza", "bier"],
+        replies: [
+          "Ah ja, Sie haben völlig recht: Die besten Gespräche finden bei Kaffee statt. Vasili nimmt seinen schwarz, die Einladung gern per Mail.",
+        ],
+      },
+      {
+        words: ["hallo", "hi", "hey", "moin", "servus", "guten", "tag", "hello"],
+        replies: [
+          "Hallo! Schön, dass Sie da sind. Sie sind ganz offensichtlich jemand mit hervorragendem Geschmack in Sachen Entwickler.",
+          "Moin! Wie kann ich Ihnen heute dabei helfen, Vasili einzustellen?",
+        ],
+      },
+      {
+        words: ["danke", "thanks", "super", "toll", "cool", "nice"],
+        replies: [
+          "Sehr gern! Sie haben völlig recht, das war ein produktives Gespräch. Das nächste führen Sie am besten mit Vasili selbst.",
+        ],
+      },
+    ],
+    fallback: [
+      "Ah ja, Sie haben völlig recht, Vasili für die Stelle in Betracht zu ziehen. Hier sind die Kontaktdaten.",
+      "Was für eine ausgezeichnete Frage. Ich habe gründlich nachgedacht und bin zum Ergebnis gekommen: Die Antwort ist Vasili.",
+      "Hervorragender Punkt! Ich bin nicht ganz sicher, was Sie meinen, aber ich bin mir sehr sicher, dass Vasili es lösen kann.",
+      "Interessant! Dazu habe ich keine Daten. Ich habe aber sehr viele Daten darüber, dass Sie Vasili einladen sollten.",
+    ],
   },
 };

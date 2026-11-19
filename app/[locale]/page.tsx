@@ -13,6 +13,7 @@ import { TerminalTheme } from "@/themes/terminal/TerminalTheme";
 import { VibeTheme } from "@/themes/vibe/VibeTheme";
 import { WantedTheme } from "@/themes/wanted/WantedTheme";
 import { Overview } from "@/themes/overview/Overview";
+import { AiTheme } from "@/themes/ai/AiTheme";
 import { mailHref } from "@/components/mailto";
 
 export default async function HomePage({ params }: { params: LocaleParams }) {
@@ -95,6 +96,15 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
           ),
           recipe: <RecipeTheme locale={locale} />,
           boarding: <BoardingTheme locale={locale} />,
+          ai: (
+            <AiTheme
+              title={`${profile.name} — ${site.role}`}
+              text={mottos.ai}
+              email={profile.email}
+              mailto={mailHref(contact.mailSubject)}
+              links={links}
+            />
+          ),
         }}
       />
     </>

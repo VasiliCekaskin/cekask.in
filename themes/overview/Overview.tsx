@@ -4,7 +4,7 @@ import { Emphasis } from "@/components/Emphasis";
 import { GoToMotto } from "@/components/GoToMotto";
 import { RollButton } from "@/components/RollButton";
 import { getContent, profile } from "@/content";
-import type { MottoId } from "@/content/types";
+import type { AiText, MottoId } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 import { MOTTOS, RECOMMENDED } from "@/lib/motto-ids";
 import styles from "./Overview.module.css";
@@ -63,7 +63,7 @@ export function Overview({ locale }: { locale: Locale }) {
             <li key={id}>
               <GoToMotto motto={id} className={styles.card}>
                 <span className={styles.preview} data-preview={id} aria-hidden="true">
-                  <Preview id={id} name={mottos.names[id]} />
+                  <Preview id={id} name={mottos.names[id]} ai={mottos.ai} />
                 </span>
                 <span className={styles.cardText}>
                   <span className={styles.cardName}>
@@ -85,7 +85,7 @@ export function Overview({ locale }: { locale: Locale }) {
 }
 
 /** A tiny decorative sketch of each motto, in its colors and fonts. */
-function Preview({ id, name }: { id: MottoId; name: string }) {
+function Preview({ id, name, ai }: { id: MottoId; name: string; ai: AiText }) {
   switch (id) {
     case "pro":
       return (
@@ -199,6 +199,19 @@ function Preview({ id, name }: { id: MottoId; name: string }) {
             <span className={styles.pvLine} />
             <span className={styles.pvLine} data-short />
           </span>
+        </span>
+      );
+    case "ai":
+      return (
+        <span className={styles.pv}>
+          <span className={styles.pvBubble} data-me data-ai>
+            {ai.suggestions[0]}
+          </span>
+          <span className={styles.pvAi}>
+            <span className={styles.pvAiDot}>✦</span>
+            <span>{ai.previewReply}</span>
+          </span>
+          <span className={styles.pvPrompt} />
         </span>
       );
     case "boarding":
